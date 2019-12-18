@@ -21,10 +21,12 @@ First, clone the project (For instance in `/var/www/codeflix/`)
 
 ### Install dependencies
 
+    $ sudo apt instal python3-venv
+    $ sudo apt install postgresql
 
 	$ python3 -m venv venv
 	$ source venv/bin/activate
-    $ pip3 install django=2.2.6
+    $ pip3 install -r requirements.txt
 
 
 ### Setup the backend
