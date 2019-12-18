@@ -8,6 +8,7 @@ Required packages
  * python3-django
  * python3-psycopg2
  * postgresql
+ * postgresql-server-dev-11
  * nginx
  * uwsgi
  * uwsgi-plugin-python3
@@ -19,14 +20,10 @@ First, clone the project (For instance in `/var/www/codeflix/`)
 
 	$ git clone https://gitlab.crans.org/bombar/codeflix.git
 
-### Install dependencies
-
-    $ sudo apt instal python3-venv
-    $ sudo apt install postgresql
+### Setup virtualenv
 
 	$ python3 -m venv venv
 	$ source venv/bin/activate
-    $ pip3 install -r requirements.txt
 
 
 ### Setup the backend
