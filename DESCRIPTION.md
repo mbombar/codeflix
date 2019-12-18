@@ -7,7 +7,7 @@ Créer un site qui aiderait les gens à s'améliorer en compétition d'algorithm
 
 ## Contexte
 
-codeforces.com est un site russe (mais avec une interface disponible en anglais) qui propose régulièrement des compétitions d'algorithmique pour ses utilisateurs.
+[codeforces](codeforces.com) est un site russe (mais avec une interface disponible en anglais) qui propose régulièrement des compétitions d'algorithmique pour ses utilisateurs.
 L'idée, c'est que chaque problème est aussi accessible a posteriori, ce qui est très pratique pour s'entraîner et progresser (en sélectionnant des vieux problèmes pertinents).
 La question qui se pose alors est : comment choisir de façon pertinente les problèmes sur lesquels s'entraîner ?
 
