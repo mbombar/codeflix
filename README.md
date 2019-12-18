@@ -8,7 +8,6 @@ Required packages
  * python3-django
  * python3-psycopg2
  * postgresql
- * postgresql-server-dev-11
  * nginx
  * uwsgi
  * uwsgi-plugin-python3
