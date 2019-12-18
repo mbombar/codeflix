@@ -11,7 +11,7 @@ Required packages
  * nginx
  * uwsgi
  * uwsgi-plugin-python3
- * python3-virtualenv
+ * python3-venv
 
 ## Install
 
