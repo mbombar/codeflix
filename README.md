@@ -36,17 +36,20 @@ For instance, on a fresh install on a Debian Buster-Like server, you can edit th
 	local codeflix codeflix        md5
 
 
-Finally, generate a new `secret_key` for the project, and put it in `codeflix/codeflix/settings_local.py` :
+Generate a new `secret_key` for the project, and put it in `codeflix/codeflix/settings_local.py` :
 
 	$ python3 -c 'import random; print("".join([random.choice("abcdefghijklmnopqrstuvwxyz0123456789!@#$%&*(-_=+)") for i in range(50)]))'
 
+Finally, apply the migrations
+
+	$ ./manage.py makemigrations
+	$ ./manage.py migrate
 
 ### Setup a virtualenv
 
 
 	$ python3 -m venv venv
 	$ source venv/bin/activate
-
 
 ### Run a demo server
 
