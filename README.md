@@ -11,12 +11,11 @@ Required packages
  * nginx
  * uwsgi
  * uwsgi-plugin-python3
+ * python3-virtualenv
 
 ## Install
 
 First, clone the project (For instance in `/var/www/codeflix/`)
-
-.. code:: bash
 
 	$ git clone https://gitlab.crans.org/bombar/codeflix.git
 
@@ -24,8 +23,6 @@ First, clone the project (For instance in `/var/www/codeflix/`)
 ### Setup the backend
 
 We use a Postgresql Database Engine. By default the database name is `codeflix` and so is the database user, and is accessed locally. But this can be changed in `codeflix/codeflix/settings_local.py`. In this very same file, setup
-
-.. code:: bash
 
 	$ mpasswd # Create a password for the database user and put it in settings_local.py
 	$ sudo -u postgres psql
@@ -46,13 +43,11 @@ Finally, generate a new `secret_key` for the project, and put it in `codeflix/co
 
 ### Setup a virtualenv
 
-.. code:: bash
 
-   $ python3 -m venv venv
-   $ source venv/bin/activate
+	$ python3 -m venv venv
+	$ source venv/bin/activate
 
 
 ### Run a demo server
 
-.. code:: bash
 	$ ./manage.pu runserver
