@@ -19,6 +19,13 @@ First, clone the project (For instance in `/var/www/codeflix/`)
 
 	$ git clone https://gitlab.crans.org/bombar/codeflix.git
 
+### Install dependencies
+
+
+	$ python3 -m venv venv
+	$ source venv/bin/activate
+    $ pip3 install django=2.2.6
+
 
 ### Setup the backend
 
@@ -45,11 +52,6 @@ Finally, apply the migrations
 	$ ./manage.py makemigrations
 	$ ./manage.py migrate
 
-### Setup a virtualenv
-
-
-	$ python3 -m venv venv
-	$ source venv/bin/activate
 
 ### Run a demo server
 
