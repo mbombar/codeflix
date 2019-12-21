@@ -23,7 +23,7 @@ First, clone the project (For instance in `/var/www/codeflix/`)
 ### Install dependencies
 
 	$ sudo apt install python3
-    $ sudo apt instal python3-venv
+    $ sudo apt install python3-venv
 	$ sudo apt install python3-dev
     $ sudo apt install postgresql
 	$ sudo apt install postgresql-server-dev-NN # Where NN is the postgresql version.
@@ -62,4 +62,4 @@ Finally, apply the migrations
 
 ### Run a demo server
 
-	$ ./manage.pu runserver
+	$ ./manage.py runserver
