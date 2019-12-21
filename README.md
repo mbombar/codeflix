@@ -1,5 +1,8 @@
 codeflix
 ========
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.txt)
+[![pipeline status](https://gitlab.crans.org/bombar/codeflix/badges/master/pipeline.svg)](https://gitlab.crans.org/bombar/codeflix/commits/master)
+[![coverage report](https://gitlab.crans.org/bombar/codeflix/badges/master/coverage.svg)](https://gitlab.crans.org/bombar/codeflix/commits/maste)
 
 Required packages (To be verified)
 -----------------
@@ -73,32 +76,32 @@ Finally, apply the migrations
 
 ### Setup the website on a real server
 
-    We provide an example configuration to use with Nginx webserver and uWSGI.
+We provide an example configuration to use with `Nginx` webserver and `uWSGI`.
 
-    #### Configuration for uWSGI and Nginx
+#### Configuration for uWSGI and Nginx
 
-    First, install the necessary packages. For instance, on a Debian-like server
+First, install the necessary packages. For instance, on a Debian-like server
 
     $ sudo apt install nginx uwsgi uwsgi-plugin-python3
 
-    Then, edit the example configuration located in codeflix/utils/ with your parameters.
+Then, edit the example configuration located in `codeflix/utils/` with your parameters.
 
-    Finally, link the files to Nginx and uWSGI configuration
+Finally, link the files to `Nginx` and `uWSGI` configuration
 
-    For example :
+For example :
 
     $ sudo ln -s /var/www/codeflix/utils/codeflix_nginx.conf /etc/nginx/sites-enabled/
     $ sudo ln -s /var/www/codeflix/utils/codeflix_uwsgi.ini /etc/uwsgi/apps-enabled/
     $ sudo systemctl restart nginx uwsgi
 
-    #### HTTPS
+#### HTTPS
 
-    If you want to use HTTPS (and you should !), you need to create certificates. We advise you to use Let's Encrypt certificates. Please, refer to the corresponding documentation for more information.
+If you want to use HTTPS (and you should !), you need to create certificates. We advise you to use Let's Encrypt certificates. Please, refer to the corresponding documentation for more information.
 
-    #### Local Settings
+#### Local Settings
 
-    You will also need to edit your settings_local.py to provide a list of ALLOWED_HOSTS and a path for the static files.
+You will also need to edit your `settings_local.py` to provide a list of `ALLOWED_HOSTS` and a path for the static files.
 
-    Finally, collect the static files.
+Finally, collect the static files.
 
     $ ./manage.py collectstatics
