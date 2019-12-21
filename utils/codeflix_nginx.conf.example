@@ -1,0 +1,46 @@
+upstream codeflix {
+	 # Path of the unix socket. For example :
+	 # server unix:///var/www/codeflix/utils/codeflix.sock;
+}
+
+server {
+	listen 80;
+	listen [::]:80;
+
+	server_name codeflix.example.org;  # Modify this value according to your infrastructure.
+	charset utf-8;
+
+	server_tokens off;
+
+# 	# Uncomment the following lines to enable https (and you should !!)
+# 	return 301 https://$http_host$request_uri;
+# }
+
+
+# server {
+#        listen 443 ssl http2;
+#        listen [::]:443 ssl http2;
+
+#        server_name codeflix.servens.org codeflix.adh.crans.org;
+
+#        server_tokens off;
+
+#        keepalive_timeout 70;
+
+#        ssl on;
+#        ssl_protocols TLSv1.3 TLSv1.2;  # Choose the TLS versions you want.
+#        ssl_certificate ;  # Put in here the path for the fullchain.pem file.
+#        ssl_certificate_key ; # Put in here the path for the privey.pem file.
+
+
+       location /static {
+       		# Alias the path to the static files. For instance,
+       		# alias /var/www/codeflix/static/;
+		}
+       location / {
+       		uwsgi_pass codeflix;
+		# Include the uwsgi_params file. For instance :
+		# include /var/www/codeflix/utils/uwsgi_params;
+		}
+
+}

@@ -1,0 +1,28 @@
+# # codeflix_uwsgi.ini file
+# Uncomment and modify the variables that suits to your installation.
+
+[uwsgi]
+uid             = www-data
+gid             = codeflix
+# Django-related settings
+# the base directory (full path)
+# chdir           = /var/www/codeflix/codeflix
+# Django's wsgi file
+#module          = winaps.wsgi:application
+# the virtualenv (full path)
+# home            = /var/www/codeflix/venv
+# wsgi-file       = /var/www/codeflix/codeflix/codeflix/wsgi.py
+plugin          = python3
+# process-related settings
+# master
+master          = true
+# maximum number of worker processes
+processes       = 10
+# the socket (use the full path to be safe
+socket          = /var/www/codeflix/utils/codeflix.sock
+# ... with appropriate permissions - may be needed
+chmod-socket    = 664
+# clear environment on exit
+vacuum          = true
+#Touch reload
+# touch-reload = /var/www/codeflix/codeflix/codeflix/settings.py

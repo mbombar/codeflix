@@ -69,3 +69,36 @@ Finally, apply the migrations
 ### Create a superuser
 
 	$ ./manage.py createsuperuser
+
+
+### Setup the website on a real server
+
+    We provide an example configuration to use with Nginx webserver and uWSGI.
+
+    #### Configuration for uWSGI and Nginx
+
+    First, install the necessary packages. For instance, on a Debian-like server
+
+    $ sudo apt install nginx uwsgi uwsgi-plugin-python3
+
+    Then, edit the example configuration located in codeflix/utils/ with your parameters.
+
+    Finally, link the files to Nginx and uWSGI configuration
+
+    For example :
+
+    $ sudo ln -s /var/www/codeflix/utils/codeflix_nginx.conf /etc/nginx/sites-enabled/
+    $ sudo ln -s /var/www/codeflix/utils/codeflix_uwsgi.ini /etc/uwsgi/apps-enabled/
+    $ sudo systemctl restart nginx uwsgi
+
+    #### HTTPS
+
+    If you want to use HTTPS (and you should !), you need to create certificates. We advise you to use Let's Encrypt certificates. Please, refer to the corresponding documentation for more information.
+
+    #### Local Settings
+
+    You will also need to edit your settings_local.py to provide a list of ALLOWED_HOSTS and a path for the static files.
+
+    Finally, collect the static files.
+
+    $ ./manage.py collectstatics
