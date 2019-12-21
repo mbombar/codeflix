@@ -3,10 +3,10 @@ SECRET_KEY = 'VerySecureSecretKey'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'codeflix', # If you change this setting, be careful during the install.
-        'USER': 'codeflix', # If you change this setting, be careful during the install.
+        'NAME': 'codeflix',  # If you change this setting, be careful during the install.
+        'USER': 'codeflix',  # If you change this setting, be careful during the install.
         'PASSWORD': 'VerySecretPassword',
-        'HOST': 'localhost', # If you change this setting, be careful during the install.
-        'PORT': '5432', # If you change this setting, be careful during the install.
+        'HOST': 'localhost',  # If you change this setting, be careful during the install.
+        'PORT': '5432',  # If you change this setting, be careful during the install.
     }
 }
