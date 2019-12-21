@@ -56,6 +56,7 @@ Generate a new `secret_key` for the project, and put it in `codeflix/codeflix/se
 
 Finally, apply the migrations
 
+	$ cd codeflix
 	$ ./manage.py makemigrations
 	$ ./manage.py migrate
 
@@ -63,3 +64,8 @@ Finally, apply the migrations
 ### Run a demo server
 
 	$ ./manage.py runserver
+
+
+### Create a superuser
+
+	$ ./manage.py createsuperuser
