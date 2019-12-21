@@ -1,3 +1,7 @@
 settings_local.py
 *.pyc
 venv/
+.tox
+.coverage
+*.egg-info/
+*~
