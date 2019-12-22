@@ -5,7 +5,7 @@ from django.contrib.admin.sites import AlreadyRegistered
 
 def autoregister(*app_list):
     """
-    Automatically register all the models from a given list 
+    Automatically register all the models from a given list
     of apps to the admin site
     """
     for app in app_list:

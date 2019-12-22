@@ -1,10 +1,8 @@
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
-
-
 
 
 class CodeforcesUser(models.Model):
@@ -29,12 +27,12 @@ class CodeforcesUser(models.Model):
         max_length=255,
         blank=True,
     )
-    firstName = models.CharField(
+    first_name = models.CharField(
         max_length=255,
         blank=True,
         verbose_name=_("First name"),
     )
-    lastName = models.CharField(
+    last_name = models.CharField(
         max_length=255,
         blank=True,
         verbose_name=_("Last name"),
@@ -62,29 +60,29 @@ class CodeforcesUser(models.Model):
         blank=True,
         verbose_name=_("Rank"),
     )
-    maxRating = models.CharField(
+    max_rating = models.CharField(
         max_length=255,
         blank=True,
         verbose_name=_("Max Rating"),
     )
-    lastOnlineTimeSeconds = models.BigIntegerField(
+    last_online_time_seconds = models.BigIntegerField(
         verbose_name=_("Time, when user was last seen online, in UNIX format."),
     )
-    registrationTimeSeconds = models.BigIntegerField(
+    registration_time_seconds = models.BigIntegerField(
         verbose_name=_("Time, when user was registered, in UNIX format."),
     )
-    friendOfCount = models.IntegerField(
+    friend_of_count = models.IntegerField(
         verbose_name=_("Amount of users who have this user in friends."),
     )
     avatar = models.CharField(
         max_length=255,
         verbose_name=_("User's avatar URL."),
     )
-    titlePhoto = models.CharField(
+    title_photo = models.CharField(
         max_length=255,
         verbose_name=_("User's title photo URL."),
     )
-    databaseUser = models.ForeignKey(
+    database_user = models.ForeignKey(
         User,
         blank=True,
         null=True,
