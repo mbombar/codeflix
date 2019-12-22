@@ -74,14 +74,6 @@ class CodeforcesUser(models.Model):
     friend_of_count = models.IntegerField(
         verbose_name=_("Amount of users who have this user in friends."),
     )
-    avatar = models.CharField(
-        max_length=255,
-        verbose_name=_("User's avatar URL."),
-    )
-    title_photo = models.CharField(
-        max_length=255,
-        verbose_name=_("User's title photo URL."),
-    )
     database_user = models.ForeignKey(
         User,
         blank=True,
