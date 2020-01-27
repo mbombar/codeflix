@@ -11,53 +11,66 @@ import json
 
 # Make a codeforces request.
 def makecfrequest(req):
+    """
+    Make a codeforces request.
+    """
     http = urllib3.PoolManager()
     request = http.request('GET', 'https://codeforces.com/api/{}'.format(req))
     time.sleep(0.21) # Codeforces api limits to 5 requests per second.
     return json.loads(request.data)
 
 
-# Get the list of all contests.
 def getcontestslist():
+    """
+    Get the list of all contests.
+    """
     return makecfrequest('contest.list?gym=false')
 
 
 def getcontest(contestslist, contestid):
         """
-        get contest object with id `contestid` from the contestslist
+        Get contest object with id `contestid` from the contestslist
         """
         return list(filter(lambda c: c['id'] == contestid, contestslist))[0]
 
-# From a list of contests, get the list of corresponding ids.
-# TO DEBUG
 def getcontestidslist(contestslist):
     """
+    From a list of contests, get the list of corresponding ids.
     contestslist is a list of contests, eg getcontestslist['result']
     """
     return list(map(lambda c: c['id'], contestslist))
 
 
 def getRatingInfo(contestid):
-        return makecfrequest('contest.ratingChanges?contestId={}'.format(contestid))
+    """
+    Get rating info of contest of id `contestid`
+    """
+    return makecfrequest('contest.ratingChanges?contestId={}'.format(contestid))
 
 
-
-# From a contest id, decide if we should take it into account.
 def isuseful(contestid):
+    """
+    From a contest id, decide if we should take it into account.
+    """
     l = makecfrequest('contest.ratingChanges?contestId={}'.format(contestid))
     return l['status'] == 'OK'
 
-
-# From a list of contest ids.
 def filterusefulcontests(contestsidlist):
+    """
+    Get all useful contests from a list of contest ids
+    """
     return list(filter(isuseful, contestsidlist))
 
-# Get the list of submissions in a contest.
 def getsubmissionslist(contestid):
+    """
+    Get the list of submissions in a contest.
+    """
     return makecfrequest('contest.status?contestId={}'.format(contestid))
 
-# Extract only solved submissions in a list of submissions.
 def solvedsubmissions(listsubmissions):
+    """
+    Extract only solved submissions in a list of submissions.
+    """
     solves, participants, problems = [], [], []
     for submi in listsubmissions['result']:
         solvers_party = submi['author']
