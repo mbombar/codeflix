@@ -1,7 +1,7 @@
 import sys
 import socket
 import string
-import urllib.request
+import urllib3
 import datetime
 import time
 import select
@@ -11,7 +11,10 @@ import json
 
 # Make a codeforces request.
 def makecfrequest(req):
-        return json.loads(str(urllib.request.urlopen('http://codeforces.com/api/' + req).read().decode("UTF-8")))
+        http = urllib3.PoolManager()
+        request = http.request('GET', 'http://codeforces.com/api/{}'.format(req))
+        return json.loads(request.data)
+
 
 # Get the list of all contests.
 def getcontestslist():
@@ -30,8 +33,8 @@ def getcontestidslist(contestslist):
 # From a contest id, decide if we should take it into account.
 def isuseful(contestid):
     try:
-        l = makecfrequest('contest.ratingChanges?contestId=' + contestid)
-        return l != []
+        l = makecfrequest('contest.ratingChanges?contestId={}'.format(contestid))
+        return l['status'] == 'OK'
     except:
         print('FAIL')
         return False
@@ -43,7 +46,7 @@ def filterusefulcontests(contestsidlist):
 # Get the list of submissions in a contest.
 def getsubmissionslist(contestid):
     try:
-        return makecfrequest('contest.status?contestId=' + contestid)
+        return makecfrequest('contest.status?contestId={}'.format(contestid))
     except:
         print('FAIL')
         return None
