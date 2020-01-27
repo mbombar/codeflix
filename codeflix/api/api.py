@@ -20,11 +20,26 @@ def makecfrequest(req):
 def getcontestslist():
     return makecfrequest('contest.list?gym=false')
 
+
+def getcontest(contestslist, contestid):
+        """
+        get contest object with id `contestid` from the contestslist
+        """
+        return list(filter(lambda c: c['id'] == contestid, contestslist))[0]
+
 # From a list of contests, get the list of corresponding ids.
 # TO DEBUG
 def getcontestidslist(contestslist):
-    return []
-    #return list(map(lambda c: print(c), c['id'], list(contestslist)))
+    """
+    contestslist is a list of contests, eg getcontestslist['result']
+    """
+    return list(map(lambda c: c['id'], contestslist))
+
+
+def getRatingInfo(contestid):
+        return makecfrequest('contest.ratingChanges?contestId={}'.format(contestid))
+
+
 
 # From a contest id, decide if we should take it into account.
 def isuseful(contestid):
