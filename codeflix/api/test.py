@@ -1,5 +1,6 @@
 import api
 
+
 def testusefulness():
     try:
         print('Testing isuseful')
@@ -16,5 +17,5 @@ def testusefulness():
     except AssertionError:
         print('Error !')
 
-testusefulness()
 
+testusefulness()

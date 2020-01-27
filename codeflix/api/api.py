@@ -1,15 +1,8 @@
-import sys
-import socket
-import string
-import urllib3
-import datetime
-import time
-import select
-import fcntl, os
-from socket import AF_INET, SOCK_DGRAM
 import json
+import time
 
-from utils import timeit
+import urllib3
+
 
 def makecfrequest(req):
     """
@@ -17,7 +10,7 @@ def makecfrequest(req):
     """
     http = urllib3.PoolManager()
     request = http.request('GET', 'https://codeforces.com/api/{}'.format(req))
-    time.sleep(0.21) # Codeforces api limits to 5 requests per second.
+    time.sleep(0.21)  # Codeforces api limits to 5 requests per second.
     return json.loads(request.data)
 
 
@@ -29,10 +22,11 @@ def getcontestslist():
 
 
 def getcontest(contestslist, contestid):
-        """
-        Get contest object with id `contestid` from the contestslist
-        """
-        return list(filter(lambda c: c['id'] == contestid, contestslist))[0]
+    """
+    Get contest object with id `contestid` from the contestslist
+    """
+    return list(filter(lambda c: c['id'] == contestid, contestslist))[0]
+
 
 def getcontestidslist(contestslist):
     """
@@ -42,7 +36,7 @@ def getcontestidslist(contestslist):
     return list(map(lambda c: c['id'], contestslist))
 
 
-def getRatingInfo(contestid):
+def getratinginfo(contestid):
     """
     Get rating info of contest of id `contestid`
     """
@@ -53,8 +47,9 @@ def isuseful(contestid):
     """
     From a contest id, decide if we should take it into account.
     """
-    l = makecfrequest('contest.ratingChanges?contestId={}'.format(contestid))
-    return l['status'] == 'OK'
+    req = makecfrequest('contest.ratingChanges?contestId={}'.format(contestid))
+    return req['status'] == 'OK'
+
 
 def filterusefulcontests(contestsidlist):
     """
@@ -62,11 +57,13 @@ def filterusefulcontests(contestsidlist):
     """
     return list(filter(isuseful, contestsidlist))
 
+
 def getsubmissionslist(contestid):
     """
     Get the list of submissions in a contest.
     """
     return makecfrequest('contest.status?contestId={}'.format(contestid))
+
 
 def solvedsubmissions(listsubmissions):
     """
