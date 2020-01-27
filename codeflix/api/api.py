@@ -9,7 +9,8 @@ import fcntl, os
 from socket import AF_INET, SOCK_DGRAM
 import json
 
-# Make a codeforces request.
+from utils import timeit
+
 def makecfrequest(req):
     """
     Make a codeforces request.
