@@ -11,18 +11,14 @@ import json
 
 # Make a codeforces request.
 def makecfrequest(req):
-        http = urllib3.PoolManager()
-        request = http.request('GET', 'http://codeforces.com/api/{}'.format(req))
-        return json.loads(request.data)
+    http = urllib3.PoolManager()
+    request = http.request('GET', 'https://codeforces.com/api/{}'.format(req))
+    return json.loads(request.data)
 
 
 # Get the list of all contests.
 def getcontestslist():
-    try:
-        return makecfrequest('contest.list?gym=false')
-    except:
-        print('FAIL')
-        return None
+    return makecfrequest('contest.list?gym=false')
 
 # From a list of contests, get the list of corresponding ids.
 # TO DEBUG
@@ -32,12 +28,9 @@ def getcontestidslist(contestslist):
 
 # From a contest id, decide if we should take it into account.
 def isuseful(contestid):
-    try:
-        l = makecfrequest('contest.ratingChanges?contestId={}'.format(contestid))
-        return l['status'] == 'OK'
-    except:
-        print('FAIL')
-        return False
+    l = makecfrequest('contest.ratingChanges?contestId={}'.format(contestid))
+    return l['status'] == 'OK'
+
 
 # From a list of contest ids.
 def filterusefulcontests(contestsidlist):
@@ -45,11 +38,7 @@ def filterusefulcontests(contestsidlist):
 
 # Get the list of submissions in a contest.
 def getsubmissionslist(contestid):
-    try:
-        return makecfrequest('contest.status?contestId={}'.format(contestid))
-    except:
-        print('FAIL')
-        return None
+    return makecfrequest('contest.status?contestId={}'.format(contestid))
 
 # Extract only solved submissions in a list of submissions.
 def solvedsubmissions(listsubmissions):
