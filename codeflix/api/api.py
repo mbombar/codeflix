@@ -13,6 +13,7 @@ import json
 def makecfrequest(req):
     http = urllib3.PoolManager()
     request = http.request('GET', 'https://codeforces.com/api/{}'.format(req))
+    time.sleep(0.21) # Codeforces api limits to 5 requests per second.
     return json.loads(request.data)
 
 
