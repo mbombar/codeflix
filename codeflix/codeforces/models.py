@@ -80,3 +80,48 @@ class CodeforcesUser(models.Model):
         null=True,
         on_delete=models.SET_NULL,
     )
+
+
+class Contest(models.Model):
+    """
+    A Codeforces Contest object.
+    """
+    contest_id = models.IntegerField(
+        verbose_name=_("Id of the contest.")
+    )
+    name = models.CharField(
+        max_length=255,
+        verbose_name=_("Name of the contest.")
+    )
+    type = models.CharField(
+        max_length=255,
+        choices=[("CF", "CF"),
+                 ("IOI", "IOI"),
+                 ("ICPC", "ICPC")],
+        verbose_name=_("Scoring system used for the contest.")
+    )
+    phase = models.CharField(
+        max_length=255,
+        choices=[("BEFORE", "BEFORE"),
+                 ("CODING", "CODING"),
+                 ("PENDING_SYSTEM_TEST", "PENDING_SYSTEM_TEST"),
+                 ("SYSTEM_TEST", "SYSTEM_TEST"),
+                 ("FINISHED", "FINISHED")],
+        verbose_name=_("Current phase of the contest.")
+    )
+    frozen = models.BooleanField()
+    duration_seconds = models.IntegerField(
+        verbose_name=_("Duration of the contest in seconds.")
+    )
+    start_time_seconds = models.BigIntegerField(
+        blank=True,
+        verbose_name=_("Contest start time in unix format.")
+    )
+    relative_time_seconds = models.BigIntegerField(
+        blank=True,
+        verbose_name=_("Number of seconds, passed after the start of the contest.")
+    )
+    difficulty = models.IntegerField(
+        blank=True,
+        verbose_name=_("Larger number means more difficult problems")
+    )
