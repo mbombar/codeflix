@@ -60,6 +60,15 @@ class CodeforcesUser(models.Model):
         blank=True,
         verbose_name=_("Rank"),
     )
+    rating = models.IntegerField(
+        verbose_name=_("Rating"),
+        default=0
+    )
+    max_rank = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name=_("User's max rank."),
+    )
     max_rating = models.CharField(
         max_length=255,
         blank=True,
@@ -73,6 +82,16 @@ class CodeforcesUser(models.Model):
     )
     friend_of_count = models.IntegerField(
         verbose_name=_("Amount of users who have this user in friends."),
+    )
+    avatar = models.CharField(
+        max_length=255,
+        verbose_name=_("User's avatar URL."),
+        blank=True,
+    )
+    title_photo = models.CharField(
+        max_length=255,
+        verbose_name=_("User's title photo URL."),
+        blank=True,
     )
     database_user = models.ForeignKey(
         User,
