@@ -1,5 +1,6 @@
 # Register your models here.
 
 from DjangoTools import tools
+from .models import CodeforcesUser
 
-tools.autoregister('codeforces')
+tools.autoregister(app_list=['codeforces'], ignored_models=[CodeforcesUser])
