@@ -105,11 +105,7 @@ def _isuseful(contestid, contests=None):
         contest = getcontest(contests, contestid)
         req = makecfrequest('contest.ratingChanges?contestId={}'.format(contestid))
         useful = req['status'] == 'OK'
-        data = {}
-        data['duration_seconds'] = contest.pop('durationSeconds')
-        data['start_time_seconds'] = contest.pop('startTimeSeconds')
-        data['relative_time_seconds'] = contest.pop('relativeTimeSeconds')
-        data.update(contest)
+        data = dict_camel_to_snake(contest)
         data['useful'] = useful
         obj = Contest(**data)
         obj.save()
