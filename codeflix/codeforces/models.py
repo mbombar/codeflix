@@ -19,11 +19,11 @@ class CodeforcesUser(models.Model):
         verbose_name=_("Email address"),
         blank=True,
     )
-    vkid = models.CharField(
+    vk_id = models.CharField(
         max_length=255,
         blank=True,
     )
-    openid = models.CharField(
+    open_id = models.CharField(
         max_length=255,
         blank=True,
     )
