@@ -86,8 +86,9 @@ class Contest(models.Model):
     """
     A Codeforces Contest object.
     """
-    contest_id = models.IntegerField(
-        verbose_name=_("Id of the contest.")
+    id = models.IntegerField(
+        verbose_name=_("Id of the contest."),
+        primary_key=True
     )
     name = models.CharField(
         max_length=255,
@@ -114,14 +115,18 @@ class Contest(models.Model):
         verbose_name=_("Duration of the contest in seconds.")
     )
     start_time_seconds = models.BigIntegerField(
-        blank=True,
+        null=True,
         verbose_name=_("Contest start time in unix format.")
     )
     relative_time_seconds = models.BigIntegerField(
-        blank=True,
+        null=True,
         verbose_name=_("Number of seconds, passed after the start of the contest.")
     )
     difficulty = models.IntegerField(
-        blank=True,
+        null=True,
         verbose_name=_("Larger number means more difficult problems")
+    )
+    useful = models.BooleanField(
+        default=False,
+        verbose_name=_("Is this contest useful for codeflix ?")
     )

@@ -1,7 +1,20 @@
 import json
+import os
+import sys
 import time
 
+import django
 import urllib3
+
+if '../' not in sys.path:
+    sys.path.append('../')
+
+# Setup django environment
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'codeflix.settings')
+django.setup()
+
+
+from codeforces.models import Contest
 
 
 def makecfrequest(req):
@@ -43,13 +56,38 @@ def getratinginfo(contestid):
     return makecfrequest('contest.ratingChanges?contestId={}'.format(contestid))
 
 
+def _isuseful(contestid, contests=None):
+    """
+    From a contest id, decide if we should take it into account.
+    It first searches for the contest in the database, and insert it otherwise.
+
+    Not meant to be applied directly
+    """
+    try:
+        contest = Contest.objects.get(id=contestid)
+        return contest.useful, contests
+    except Contest.DoesNotExist:
+        if not contests:
+            contests = getcontestslist()['result']
+        contest = getcontest(contests, contestid)
+        req = makecfrequest('contest.ratingChanges?contestId={}'.format(contestid))
+        useful = req['status'] == 'OK'
+        data = {}
+        data['duration_seconds'] = contest.pop('durationSeconds')
+        data['start_time_seconds'] = contest.pop('startTimeSeconds')
+        data['relative_time_seconds'] = contest.pop('relativeTimeSeconds')
+        data.update(contest)
+        data['useful'] = useful
+        obj = Contest(**data)
+        obj.save()
+        return useful, contests
+
 def isuseful(contestid):
     """
     From a contest id, decide if we should take it into account.
+    It first searches for the contest in the database, and insert it otherwise.
     """
-    req = makecfrequest('contest.ratingChanges?contestId={}'.format(contestid))
-    return req['status'] == 'OK'
-
+    return _isuseful(contestid)[0]
 
 def filterusefulcontests(contestsidlist):
     """
