@@ -9,10 +9,10 @@ def testusefulness():
         assert(api.isuseful('412'))
         print('Testing getcontestslist')
         contestslist = api.getcontestslist()
-        assert(len(contestslist) == 2)
+        assert(contestslist)
         print('Testing getcontestidslist')
         contestsids = api.getcontestidslist(contestslist)
-        assert(len(contestsids) == 0)
+        assert(len(contestsids) == len(contestslist))
         print('Testing passed !')
     except AssertionError:
         print('Error !')
