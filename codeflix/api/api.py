@@ -65,7 +65,16 @@ def _isuseful(contestid, contests=None):
     """
     try:
         contest = Contest.objects.get(id=contestid)
-        return contest.useful, contests
+        if contest.useful:
+            # Once the contest has been marked at useful, it remains useful
+            return True, contests
+        else:
+            # A contest might not be useful yet, so we check usefulness.
+            req = makecfrequest('contest.ratingChanges?contestId={}'.format(contestid))
+            useful = req['status'] == 'OK'
+            contest.useful = True
+            contest.save()
+            return useful, contests
     except Contest.DoesNotExist:
         if not contests:
             contests = getcontestslist()['result']
