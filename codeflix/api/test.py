@@ -13,6 +13,9 @@ def testusefulness():
         print('Testing getcontestidslist')
         contestsids = api.getcontestidslist(contestslist)
         assert(len(contestsids) == len(contestslist))
+        print('Testing filterusefulcontests')
+        usefulids = api.filterusefulcontests(contestsids)
+        assert(len(usefulids) == 1069)
         print('Testing passed !')
     except AssertionError:
         print('Error !')
