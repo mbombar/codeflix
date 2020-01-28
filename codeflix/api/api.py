@@ -33,11 +33,28 @@ def makecfrequest(req):
     return json.loads(request.data)
 
 
+def handleresponse(response):
+    """
+    Handle a response of a codeforces request.
+    If something has gone wrong, raise CodeforcesIssue exception.
+    """
+    status = response['status']
+    if status == 'OK':
+        try:
+            return response['result']
+        except KeyError:
+            raise CodeforcesIssue('Status OK but I got no response')
+    else:
+        raise CodeforcesIssue(response.get('comment', 'Unknown Error'))
+
+
+
 def getcontestslist():
     """
     Get the list of all contests.
     """
-    return makecfrequest('contest.list?gym=false')
+    response = makecfrequest('contest.list?gym=false')
+    return handleresponse(response)
 
 
 def getcontest(contestslist, contestid):
@@ -50,7 +67,6 @@ def getcontest(contestslist, contestid):
 def getcontestidslist(contestslist):
     """
     From a list of contests, get the list of corresponding ids.
-    contestslist is a list of contests, eg getcontestslist['result']
     """
     return list(map(lambda c: c['id'], contestslist))
 
@@ -59,7 +75,8 @@ def getratinginfo(contestid):
     """
     Get rating info of contest of id `contestid`
     """
-    return makecfrequest('contest.ratingChanges?contestId={}'.format(contestid))
+    response = makecfrequest('contest.ratingChanges?contestId={}'.format(contestid))
+    return handleresponse(response)
 
 
 def _isuseful(contestid, contests=None):
@@ -115,7 +132,8 @@ def getsubmissionslist(contestid):
     """
     Get the list of submissions in a contest.
     """
-    return makecfrequest('contest.status?contestId={}'.format(contestid))
+    response = makecfrequest('contest.status?contestId={}'.format(contestid))
+    return handleresponse(response)
 
 
 def solvedsubmissions(listsubmissions):
@@ -123,7 +141,7 @@ def solvedsubmissions(listsubmissions):
     Extract only solved submissions in a list of submissions.
     """
     solves, participants, problems = [], [], []
-    for submi in listsubmissions['result']:
+    for submi in listsubmissions:
         solvers_party = submi['author']
         solvers = solvers_party['members']
         solver = solvers[0]['handle']
