@@ -96,7 +96,7 @@ def _isuseful(contestid, contests=None):
             # A contest might not be useful yet, so we check usefulness.
             req = makecfrequest('contest.ratingChanges?contestId={}'.format(contestid))
             useful = req['status'] == 'OK'
-            contest.useful = True
+            contest.useful = useful
             contest.save()
             return useful, contests
     except Contest.DoesNotExist:
