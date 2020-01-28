@@ -153,3 +153,18 @@ def solvedsubmissions(listsubmissions):
         if submi['verdict'] == 'OK':
             solves.append((solver, problem))
     return (solves, participants, problems)
+
+
+def getratedusers(active=False):
+    """
+    Get the list of all rated users.
+    If active, then only retrieve users who participated in rated contest during the last month.
+    """
+    response = makecfrequest('user.ratedList?activeOnly={}'.format(active))
+    return handleresponse(response)
+
+def store(user):
+    """
+    Create a BDD object representing the user in argument
+    """
+    pass
