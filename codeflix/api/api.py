@@ -14,7 +14,8 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'codeflix.settings')
 django.setup()
 
 
-from codeforces.models import Contest
+from codeforces.models import Contest, CodeforcesUser
+from utils import dict_camel_to_snake
 
 class CodeforcesIssue(Exception):
     """
@@ -163,8 +164,19 @@ def getratedusers(active=False):
     response = makecfrequest('user.ratedList?activeOnly={}'.format(active))
     return handleresponse(response)
 
+
+def getusers(handles=[]):
+    """
+    Get the specific users matching the handles in argument.
+    `Handles` is a list of handles.
+    Returns a list of User objects.
+    """
+    response = makecfrequest('user.info?handles={}'.format(";".join(handles)))
+    return handleresponse(response)
+
 def store(user):
     """
     Create a BDD object representing the user in argument
     """
-    pass
+    cfuser = dict_camel_to_snake(user)
+    obj, created = CodeforcesUser.objects.get_or_create(**cfuser)
