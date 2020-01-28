@@ -100,6 +100,9 @@ class CodeforcesUser(models.Model):
         on_delete=models.SET_NULL,
     )
 
+    def __str__(self):
+        return "{} '{}' {}".format(self.first_name, self.handle, self.last_name)
+
 
 class Contest(models.Model):
     """
