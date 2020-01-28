@@ -62,7 +62,7 @@ def getcontest(contestslist, contestid):
     """
     Get contest object with id `contestid` from the contestslist
     """
-    return list(filter(lambda c: c['id'] == contestid, contestslist))[0]
+    return list(filter(lambda c: c['id'] == int(contestid), contestslist))[0]
 
 
 def getcontestidslist(contestslist):
@@ -101,7 +101,7 @@ def _isuseful(contestid, contests=None):
             return useful, contests
     except Contest.DoesNotExist:
         if not contests:
-            contests = getcontestslist()['result']
+            contests = getcontestslist()
         contest = getcontest(contests, contestid)
         req = makecfrequest('contest.ratingChanges?contestId={}'.format(contestid))
         useful = req['status'] == 'OK'
