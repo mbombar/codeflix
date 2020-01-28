@@ -16,6 +16,12 @@ django.setup()
 
 from codeforces.models import Contest
 
+class CodeforcesIssue(Exception):
+    """
+    Basic error raised when something got wrong using the API
+    """
+    def __init__(self, msg=""):
+        Exception.__init__(self, msg)
 
 def makecfrequest(req):
     """
