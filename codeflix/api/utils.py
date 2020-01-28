@@ -3,6 +3,9 @@ import time
 import re
 
 def timeit(method):
+    """
+    Decorator used to time the execution of a function.
+    """
     def timed(*args, **kwargs):
         ts = time.time()
         result = method(*args, **kwargs)
