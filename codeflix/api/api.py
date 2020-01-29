@@ -160,6 +160,28 @@ def solvedsubmissionsfromid(contestid):
     listsubmissions = getsubmissionslist(contestid)
     return solvedsubmissions(listsubmissions)
 
+def solvedsubmissionsduringcontest(contestid):
+    r = makecfrequest('contest.standings?contestId={}'.format(contestid))
+    request = r['result']
+    pbs = request['problems']
+    rows = request['rows']
+    
+    solves = []
+    participants = []
+    problems = list(map(lambda p : p['name'], pbs))
+    nbproblems = len(problems)
+
+    for ranklistrow in rows:
+        if ranklistrow['party']['participantType'] != 'CONTESTANT':
+            continue
+        user = ranklistrow['party']['members'][0]
+        participants.append(user)
+        for i in range(nbproblems):
+            pbresult = ranklistrow['problemResults'][i]
+            if pbresult['type'] == 'FINAL':
+                solves.append((user, pbresult))
+    return (solves, participants, problems)
+
 def getratedusers(active=False):
     """
     Get the list of all rated users.
