@@ -11,6 +11,8 @@ def add_edge(user, problem, solved, G):
         G.add_edge(user, problem, weight=(0 if solved else 1))
 
 def add_contest(contestid, G):
+    # USED FOR TESTING
+    print('NEW CONTEST')
     submissionslist = api.getsubmissionslist(contestid)
     (solves, users, pbs) = api.solvedsubmissions(submissionslist)
     for user in users:
