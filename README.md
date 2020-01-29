@@ -16,7 +16,6 @@ Required packages (To be verified)
  * uwsgi
  * uwsgi-plugin-python3
  * python3-venv
- * urllib3
 
 ## Install
 
