@@ -174,12 +174,12 @@ def solvedsubmissionsduringcontest(contestid):
     for ranklistrow in rows:
         if ranklistrow['party']['participantType'] != 'CONTESTANT':
             continue
-        user = ranklistrow['party']['members'][0]
+        user = ranklistrow['party']['members'][0]['handle']
         participants.append(user)
         for i in range(nbproblems):
             pbresult = ranklistrow['problemResults'][i]
             if pbresult['type'] == 'FINAL':
-                solves.append((user, pbresult))
+                solves.append((user, problems[i]))
     return (solves, participants, problems)
 
 def getratedusers(active=False):

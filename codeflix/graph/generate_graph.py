@@ -11,9 +11,7 @@ def add_edge(user, problem, solved, G):
         G.add_edge(user, problem, weight=(0 if solved else 1))
 
 def add_contest(contestid, G):
-    # USED FOR TESTING
-    print('NEW CONTEST')
-    (solves, users, pbs) = api.solvedsubmissionsfromid(contestid)
+    (solves, users, pbs) = api.solvedsubmissionsduringcontest(contestid)
     for user in users:
         for pb in pbs:
             add_edge(user, pb, False, G)
@@ -23,6 +21,8 @@ def add_contest(contestid, G):
 def create_graph_from_ids(contestids):
     G = nx.Graph()
     for contestid in contestids:
+        # USED FOR TESTING
+        print('NEW CONTEST ' + str(contestid))
         add_contest(contestid, G)
     return G
 
