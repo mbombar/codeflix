@@ -137,19 +137,19 @@ def solvedsubmissions(listsubmissions):
     """
     Extract only solved submissions in a list of submissions.
     """
-    solves, participants, problems = [], [], []
+    solves, participants, problems = set(), set(), set()
     for submi in listsubmissions:
         solvers_party = submi['author']
         solvers = solvers_party['members']
         solver = solvers[0]['handle']
         problem = submi['problem']['name']
 
-        participants.append(solver)
-        problems.append(problem)
+        participants.add(solver)
+        problems.add(problem)
 
         if submi['verdict'] == 'OK':
-            solves.append((solver, problem))
-    return (solves, participants, list(set(problems)))
+            solves.add((solver, problem))
+    return (solves, participants, problems)
 
 
 def getratedusers(active=False):

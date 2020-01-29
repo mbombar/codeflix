@@ -21,8 +21,8 @@ def testusefulness():
         assert(len(submissionslist) == 8218)
         print('Testing solvedsubmissions')
         (solves, users, pbs) = api.solvedsubmissions(submissionslist)
-        assert(len(solves) == 3169)
-        assert(len(users) == 8218)
+        assert(len(solves) == 2938)
+        assert(len(users) == 1521)
         assert(len(pbs) == 6)
         print('Testing passed !')
     except AssertionError:

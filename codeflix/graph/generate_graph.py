@@ -1,3 +1,8 @@
+import sys
+
+if '../' not in sys.path:
+    sys.path.append('../api')
+
 import api
 import networkx as nx
 
@@ -14,12 +19,14 @@ def add_contest(contestid, G):
     for (user, pb) in solves:
         add_edge(user, pb, True, G)
 
-def create_graph():
+def create_graph_from_ids(contestids):
     G = nx.Graph()
+    for contestid in contestids:
+        add_contest(contestid, G)
+    return G
+
+def create_graph():
     contestslist = api.getcontestslist()
     contestsids = api.getcontestidslist(contestslist)
     usefulids = api.filterusefulcontests(contestsids)
-    for contestid in usefulids:
-        add_contest(contestid, G)
-    return G
- 
+    return create_graph_from_ids(usefulids)
