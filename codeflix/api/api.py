@@ -161,6 +161,11 @@ def solvedsubmissionsfromid(contestid):
     return solvedsubmissions(listsubmissions)
 
 def solvedsubmissionsduringcontest(contestid):
+    """
+    Extract solved submissions, participants and problem names
+    **during** a contest given its contest id.
+    TODO: Cache this.
+    """
     r = makecfrequest('contest.standings?contestId={}'.format(contestid))
     request = r['result']
     pbs = request['problems']
