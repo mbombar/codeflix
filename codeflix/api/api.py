@@ -149,7 +149,7 @@ def solvedsubmissions(listsubmissions):
 
         if submi['verdict'] == 'OK':
             solves.append((solver, problem))
-    return (solves, participants, problems)
+    return (solves, participants, list(set(problems)))
 
 
 def getratedusers(active=False):
