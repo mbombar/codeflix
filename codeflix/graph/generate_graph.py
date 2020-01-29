@@ -13,8 +13,7 @@ def add_edge(user, problem, solved, G):
 def add_contest(contestid, G):
     # USED FOR TESTING
     print('NEW CONTEST')
-    submissionslist = api.getsubmissionslist(contestid)
-    (solves, users, pbs) = api.solvedsubmissions(submissionslist)
+    (solves, users, pbs) = api.solvedsubmissionsfromid(contestid)
     for user in users:
         for pb in pbs:
             add_edge(user, pb, False, G)

@@ -135,7 +135,8 @@ def getsubmissionslist(contestid):
 
 def solvedsubmissions(listsubmissions):
     """
-    Extract only solved submissions in a list of submissions.
+    Extract solved submissions, participants and problem names
+    in a list of submissions.
     """
     solves, participants, problems = set(), set(), set()
     for submi in listsubmissions:
@@ -151,6 +152,13 @@ def solvedsubmissions(listsubmissions):
             solves.add((solver, problem))
     return (solves, participants, problems)
 
+def solvedsubmissionsfromid(contestid):
+    """
+    Extract solved submissions, participants and problem names
+    from a contest given its contest id.
+    """
+    listsubmissions = getsubmissionslist(contestid)
+    return solvedsubmissions(listsubmissions)
 
 def getratedusers(active=False):
     """
