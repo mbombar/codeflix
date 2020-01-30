@@ -22,11 +22,19 @@ def testnearest():
     ans = rec.knearestusers('Alice', 1, users, G)
     assert(ans == ['Bob'])
 
+def testrecommendation():
+    G = createtestgraph()
+    users = ['Alice', 'Bob', 'Charlie']
+    recommended = rec.recommendation('Alice', users, G, 1, 1)
+    assert(recommended == ['1'])
+
 def testeverything():
     print('Testing score')
     testscore()
     print('Testing knearestusers')
     testnearest()
+    print('Testing recommendations')
+    testrecommendation()
     print('Testing passed !')
 
 testeverything()

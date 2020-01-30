@@ -16,3 +16,25 @@ def knearestusers(user, k, userslist, G):
             l.append((score(user, otheruser, G), otheruser))
     l.sort()
     return [otheruser for (_, otheruser) in l[len(l) - k:]]
+
+def rankscoreproblems(users, G):
+    sumproblems = dict()
+    nbproblems = dict()
+    for user in users:
+        for problem in G[user]:
+            if problem not in sumproblems:
+                sumproblems[problem] = 0
+                nbproblems[problem] = 0
+            sumproblems[problem] += G[user][problem]['weight']
+            nbproblems[problem] += 1
+    l = []
+    for pb in sumproblems.keys():
+        l.append((sumproblems[pb] / nbproblems[pb],pb))
+    l.sort()
+    l.reverse()
+    return list(map(lambda x : x[1], l))
+
+def recommendation(user, users, G, kusers, kproblems):
+    nearestusers = knearestusers(user, kusers, users, G)
+    rankedproblems = rankscoreproblems(nearestusers, G)
+    return rankedproblems[:kproblems]
