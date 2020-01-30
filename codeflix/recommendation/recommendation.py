@@ -17,7 +17,7 @@ def knearestusers(user, k, userslist, G):
     l.sort()
     return [otheruser for (_, otheruser) in l[len(l) - k:]]
 
-def rankscoreproblems(user, users, G):
+def sortscoreproblems(user, users, G):
     sumproblems = dict()
     nbproblems = dict()
     for user in users:
@@ -35,7 +35,7 @@ def rankscoreproblems(user, users, G):
     l.reverse()
     return list(map(lambda x : x[1], l))
 
-def recommendation(user, users, G, kusers, kproblems):
+def recommendation(user, users, G, kusers):
     nearestusers = knearestusers(user, kusers, users, G)
-    rankedproblems = rankscoreproblems(user, nearestusers, G)
-    return rankedproblems[:kproblems]
+    sortedproblems = sortscoreproblems(user, nearestusers, G)
+    return sortedproblems
