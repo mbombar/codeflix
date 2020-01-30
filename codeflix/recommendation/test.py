@@ -3,11 +3,12 @@ import networkx as nx
 
 def createtestgraph():
     G = nx.Graph()
-    G.add_edge('Alice', '1', weight=1)
-    G.add_edge('Bob', '1', weight=1)
-    G.add_edge('Bob', '2', weight=0)
-    G.add_edge('Charlie', '1', weight=0)
-    G.add_edge('Charlie', '2', weight=1)
+    G.add_edge('Alice', '1', weight=0)
+    G.add_edge('Bob', '1', weight=0)
+    G.add_edge('Bob', '2', weight=1)
+    G.add_edge('Charlie', '1', weight=1)
+    G.add_edge('Charlie', '2', weight=0)
+    G.add_edge('Charlie', '3', weight=1)
     return G
 
 def testscore():
@@ -26,7 +27,7 @@ def testrecommendation():
     G = createtestgraph()
     users = ['Alice', 'Bob', 'Charlie']
     recommended = rec.recommendation('Alice', users, G, 1, 1)
-    assert(recommended == ['1'])
+    assert(recommended == ['2'])
 
 def testeverything():
     print('Testing score')
