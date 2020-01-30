@@ -15,7 +15,7 @@ def testusefulness():
         assert(len(contestsids) == len(contestslist))
         print('Testing filterusefulcontests')
         usefulids = api.filterusefulcontests(contestsids)
-        assert(len(usefulids) == 1069)
+        assert(len(usefulids) >= 1069)
         print('Testing getsubmissionslist')
         submissionslist = api.getsubmissionslist('1280')
         assert(len(submissionslist) >= 8218)
@@ -29,7 +29,9 @@ def testusefulness():
         assert(len(solves) == 2958)
         assert(len(users) == 493)
         assert(len(pbs) == 6)
-
+        print('Testing getusersubmissions')
+        submi = api.getusersubmissions('LeCaRiBoU')
+        assert(len(submi) == 1056)
         print('Testing passed !')
     except AssertionError:
         print('Error !')

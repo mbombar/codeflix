@@ -132,6 +132,12 @@ def getsubmissionslist(contestid):
     response = makecfrequest('contest.status?contestId={}'.format(contestid))
     return handleresponse(response)
 
+def getusersubmissions(handle):
+    """
+    Get the list of submissions for a given user.
+    """
+    response = makecfrequest('user.status?handle={}'.format(handle))
+    return handleresponse(response)
 
 def solvedsubmissions(listsubmissions):
     """
@@ -194,7 +200,6 @@ def getratedusers(active=False):
     """
     response = makecfrequest('user.ratedList?activeOnly={}'.format(active))
     return handleresponse(response)
-
 
 def getusers(handles=[]):
     """
