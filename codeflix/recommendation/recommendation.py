@@ -35,7 +35,7 @@ def sortscoreproblems(user, users, G):
     l.reverse()
     return list(map(lambda x : x[1], l))
 
-def recommendation(user, users, G, kusers):
+def recommendation(user, users, G, kusers = 20):
     nearestusers = knearestusers(user, kusers, users, G)
     sortedproblems = sortscoreproblems(user, nearestusers, G)
     return sortedproblems
