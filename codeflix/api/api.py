@@ -173,7 +173,7 @@ def solvedsubmissionsduringcontest(contestid):
     TODO: Cache this.
     """
     r = makecfrequest('contest.standings?contestId={}'.format(contestid))
-    request = r['result']
+    request = handleresponse(r)
     pbs = request['problems']
     rows = request['rows']
     
