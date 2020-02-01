@@ -232,7 +232,12 @@ def extractuserinfo(user):
     """
     Extract user info to be stored inside the database.
     """
-    data = {key: user[key] for key in ["handle", "firstName", "lastName"]}
+    data = {}
+    for key in ["handle", "firstName", "lastName"]:
+        try:
+            data[key] = user[key]
+        except KeyError:
+            pass
     return dict_camel_to_snake(data)
 
 def store(user):
