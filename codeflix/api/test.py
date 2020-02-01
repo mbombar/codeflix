@@ -26,7 +26,7 @@ def testusefulness():
         assert(len(pbs) == 6)
         print('Testing solvedsubmissionsduringcontest')
         (solves, users, pbs) = api.solvedsubmissionsduringcontest(1280)
-        assert(len(solves) == 2958)
+        assert(len(solves) == 1283)
         assert(len(users) == 493)
         assert(len(pbs) == 6)
         print('Testing getusersubmissions')
