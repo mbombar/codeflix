@@ -4,6 +4,34 @@ from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
 
+class Attempt(models.Model):
+    """
+    A model representing an attempt to solve a problem
+    """
+    contest = models.ForeignKey(
+        "Contest",
+        verbose_name=_("Contest for which this attempt was made."),
+        on_delete=models.CASCADE,
+        null=True,
+    )
+    problem = models.ForeignKey(
+        "Problem",
+        verbose_name=_("The problem for which this is an attempt."),
+        on_delete=models.CASCADE,
+    )
+    author = models.ForeignKey(
+        "CodeforcesUser",
+        verbose_name=_("Author of this attempt"),
+        on_delete=models.CASCADE,
+    )
+    solved = models.BooleanField(
+        default=False,
+        verbose_name=_("Was this submission a success ?")
+    )
+
+    def __str__(self):
+        return "Attempt of {} for {} {}--> {}".format(self.author.handle, self.problem.name, "in contest {} ".format(self.contest.id)*bool(self.contest), "Success"*self.solved + "Failure"*(1-self.solved))
+
 
 class CodeforcesUser(models.Model):
     """
@@ -152,3 +180,65 @@ class Contest(models.Model):
         default=False,
         verbose_name=_("Is this contest useful for codeflix ?")
     )
+    problems = models.ManyToManyField(
+        'Problem',
+        verbose_name=_("The list of problems of this contest.")
+    )
+
+    def __str__(self):
+        return "{} - {}".format(self.id, self.name)
+
+
+class Problem(models.Model):
+    """
+    A Codeforces Problem object.
+    """
+    contest_id = models.IntegerField(
+        null=True,
+        verbose_name=_("Id of the contest containing the problem.")
+    )
+    problemset_name = models.CharField(
+        max_length=255,
+        null=True,
+        verbose_name=_("Short name of the problemset the problem belongs to.")
+    )
+    index = models.CharField(
+        max_length=255,
+        verbose_name=_("Problem index in the contest.")
+    )
+    name = models.CharField(
+        max_length=255,
+        verbose_name=_("Name of the problem.")
+    )
+    type = models.CharField(
+        max_length=255,
+        choices=[("PROGRAMMING", "PROGRAMMING"),
+                 ("QUESTION", "QUESTION")],
+        verbose_name=_("Type of the problem.")
+    )
+    points = models.FloatField(
+        null=True,
+        verbose_name=_("Maximum ammount of points for the problem.")
+    )
+    rating = models.IntegerField(
+        null=True,
+        verbose_name=_("Problem rating (difficulty).")
+    )
+    tags = models.ManyToManyField(
+        'ProblemTag',
+        verbose_name=_("List of tags for the problem.")
+    )
+
+    def __str__(self):
+        return self.name
+
+
+class ProblemTag(models.Model):
+    """A Tag for a problem"""
+    name = models.CharField(
+        max_length=255,
+        verbose_name=_("The name of the tag.")
+    )
+
+    def __str__(self):
+        return self.name

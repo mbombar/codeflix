@@ -14,7 +14,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'codeflix.settings')
 django.setup()
 
 
-from codeforces.models import Contest, CodeforcesUser
+from codeforces.models import Attempt, CodeforcesUser, Contest, Problem, ProblemTag
 from utils import dict_camel_to_snake
 
 class CodeforcesIssue(Exception):
@@ -33,7 +33,6 @@ def makecfrequest(req):
     time.sleep(0.21)  # Codeforces api limits to 5 requests per second.
     return json.loads(request.data)
 
-
 def handleresponse(response):
     """
     Handle a response of a codeforces request.
@@ -48,8 +47,6 @@ def handleresponse(response):
     else:
         raise CodeforcesIssue(response.get('comment', 'Unknown Error'))
 
-
-
 def getcontestslist():
     """
     Get the list of all contests.
@@ -57,13 +54,19 @@ def getcontestslist():
     response = makecfrequest('contest.list?gym=false')
     return handleresponse(response)
 
-
-def getcontest(contestslist, contestid):
+def getcontest(contestid):
     """
     Get contest object with id `contestid` from the contestslist
     """
-    return list(filter(lambda c: c['id'] == int(contestid), contestslist))[0]
-
+    try:
+        contest = Contest.objects.get(id=contestid)
+    except Contest.DoesNotExist:
+        contestlist = getcontestlist()
+        contest = list(filter(lambda c: c['id'] == int(contestid), contestslist))[0]
+        date = dict_camel_to_snake(contest)
+        contest = Contest(**data)
+        contest.save()
+    return contest
 
 def getcontestidslist(contestslist):
     """
@@ -79,7 +82,6 @@ def getratinginfo(contestid):
     response = makecfrequest('contest.ratingChanges?contestId={}'.format(contestid))
     return handleresponse(response)
 
-
 def _isuseful(contestid, contests=None):
     """
     From a contest id, decide if we should take it into account.
@@ -87,28 +89,16 @@ def _isuseful(contestid, contests=None):
 
     Not meant to be applied directly
     """
-    try:
-        contest = Contest.objects.get(id=contestid)
-        if contest.useful:
-            # Once the contest has been marked at useful, it remains useful
-            return True, contests
-        else:
-            # A contest might not be useful yet, so we check usefulness.
-            req = makecfrequest('contest.ratingChanges?contestId={}'.format(contestid))
-            useful = req['status'] == 'OK'
-            contest.useful = useful
-            contest.save()
-            return useful, contests
-    except Contest.DoesNotExist:
-        if not contests:
-            contests = getcontestslist()
-        contest = getcontest(contests, contestid)
+    contest = getcontest(contestid)
+    if contest.useful:
+        # Once the contest has been marked at useful, it remains useful
+        return True, contests
+    else:
+        # A contest might not be useful yet, so we check usefulness.
         req = makecfrequest('contest.ratingChanges?contestId={}'.format(contestid))
         useful = req['status'] == 'OK'
-        data = dict_camel_to_snake(contest)
-        data['useful'] = useful
-        obj = Contest(**data)
-        obj.save()
+        contest.useful = useful
+        contest.save()
         return useful, contests
 
 def isuseful(contestid):
@@ -123,7 +113,6 @@ def filterusefulcontests(contestsidlist):
     Get all useful contests from a list of contest ids
     """
     return list(filter(isuseful, contestsidlist))
-
 
 def getsubmissionslist(contestid):
     """
@@ -170,29 +159,51 @@ def solvedsubmissionsduringcontest(contestid):
     """
     Extract solved submissions, participants and problem names
     **during** a contest given its contest id.
-    TODO: Cache this.
     """
-    r = makecfrequest('contest.standings?contestId={}'.format(contestid))
-    request = handleresponse(r)
-    pbs = request['problems']
-    rows = request['rows']
-    
-    solves = []
-    participants = []
-    problems = list(map(lambda p : p['name'], pbs))
-    nbproblems = len(problems)
+    contest = getcontest(contestid)
+    attempts = contest.attempt_set.all()
 
-    for ranklistrow in rows:
-        if ranklistrow['party']['participantType'] != 'CONTESTANT':
-            continue
-        for member in ranklistrow['party']['members']:
-            user = member['handle']
-            participants.append(user)
-            for i in range(nbproblems):
-                pbresult = ranklistrow['problemResults'][i]
-                if pbresult['type'] == 'FINAL':
-                    solves.append((user, problems[i]))
-    return (solves, participants, problems)
+    if attempts.count() == 0:
+        r = makecfrequest('contest.standings?contestId={}'.format(contestid))
+        request = handleresponse(r)
+        pbs = request['problems']
+
+        for pb in pbs:
+            obj = store_pb(pb)
+            contest.problems.add(obj)
+
+        rows = request['rows']
+
+        solves = []
+        participants = []
+        problems = list(map(lambda p : p['name'], pbs))
+
+        for ranklistrow in rows:
+            if ranklistrow['party']['participantType'] != 'CONTESTANT':
+                continue
+            for member in ranklistrow['party']['members']:
+                user = member['handle']
+                cfuser = CodeforcesUser.objects.get(handle=user)
+                participants.append(user)
+                for i, pb in enumerate(problems):
+                    problem = Problem.objects.get(name=pb)
+                    pbresult = ranklistrow['problemResults'][i]
+                    if pbresult.get('bestSubmissionTimeSeconds'):
+                        solved=True
+                        solves.append((user, problem.name))
+                    else:
+                        solved=False
+                    a = Attempt(contest=contest, problem=problem, author=cfuser, solved=solved)
+                    a.save()
+        return (solves, participants, problems)
+
+    else:
+        solves = list(map(lambda d: tuple(d.values()), attempts.filter(solved=True).values("author__handle", "problem__name")))
+        participants = set()
+        for x in map(lambda d: set(d.values()), attempts.values("author__handle")):
+            participants.update(x)
+        problems = list(map(lambda p : p.name, contest.problems.all()))
+        return (solves, list(participants), problems)
 
 def getratedusers(active=False):
     """
@@ -217,3 +228,19 @@ def store(user):
     """
     cfuser = dict_camel_to_snake(user)
     obj, created = CodeforcesUser.objects.get_or_create(**cfuser)
+
+def store_pb(problem):
+    """
+    Create a BDD object reprensenting the problem in argument
+    """
+    pb = dict_camel_to_snake(problem)
+    tags = pb.pop('tags')
+    tags_obj = []
+    pb_obj, created = Problem.objects.get_or_create(**pb)
+    for tag in tags:
+        tag_obj, tag_created = ProblemTag.objects.get_or_create(name=tag)
+        tags_obj.append(tag_obj)
+    for tag in tags_obj:
+        pb_obj.tags.add(tag)
+        pb_obj.save()
+    return pb_obj
