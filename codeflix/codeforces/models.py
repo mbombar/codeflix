@@ -61,7 +61,7 @@ class CodeforcesUser(models.Model):
     )
 
     def __str__(self):
-        return "{} '{}' {}".format(self.first_name, self.handle, self.last_name)
+        return "{} '{}' {}".format(self.first_name or "", self.handle, self.last_name or "")
 
 
 class Contest(models.Model):
