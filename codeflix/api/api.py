@@ -186,7 +186,7 @@ def solvedsubmissionsduringcontest(contestid):
                 try:
                     cfuser = CodeforcesUser.objects.get(handle=user)
                 except CodeforcesUser.DoesNotExist:
-                    data = getusers([user])
+                    data = getusers([user])[0]
                     data = extractuserinfo(data)
                     cfuser = CodeforcesUser(**data)
                     cfuser.save()
