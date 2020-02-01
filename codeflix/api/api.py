@@ -192,7 +192,7 @@ def solvedsubmissionsduringcontest(contestid):
                     cfuser.save()
                 participants.append(user)
                 for i, pb in enumerate(problems):
-                    problem = Problem.objects.get(name=pb)
+                    problem = Problem.objects.get(name=pb, contest_id=contestid)
                     pbresult = ranklistrow['problemResults'][i]
                     if pbresult.get('bestSubmissionTimeSeconds'):
                         solved=True
