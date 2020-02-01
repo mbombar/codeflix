@@ -97,8 +97,7 @@ class CodeforcesUser(models.Model):
         blank=True,
         verbose_name=_("User's max rank."),
     )
-    max_rating = models.CharField(
-        max_length=255,
+    max_rating = models.IntegerField(
         blank=True,
         verbose_name=_("Max Rating"),
     )
