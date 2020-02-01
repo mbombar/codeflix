@@ -187,6 +187,7 @@ def solvedsubmissionsduringcontest(contestid):
                     cfuser = CodeforcesUser.objects.get(handle=user)
                 except CodeforcesUser.DoesNotExist:
                     data = getusers([user])
+                    data = exctractuserinfo(data)
                     cfuser = CodeforcesUser(**data)
                     cfuser.save()
                 participants.append(user)
@@ -227,16 +228,23 @@ def getusers(handles=[]):
     response = makecfrequest('user.info?handles={}'.format(";".join(handles)))
     return handleresponse(response)
 
+def extractuserinfo(user):
+    """
+    Extract user info to be stored inside the database.
+    """
+    data = {key: user[key] for key in ["handle", "firstName", "lastName"]}
+    return dict_camel_to_snake(data)
+
 def store(user):
     """
-    Create a BDD object representing the user in argument
+    Create a database object representing the user in argument
     """
-    cfuser = dict_camel_to_snake(user)
+    cfuser = extractuserinfo(user)
     obj, created = CodeforcesUser.objects.get_or_create(**cfuser)
 
 def store_pb(problem):
     """
-    Create a BDD object reprensenting the problem in argument
+    Create a database object reprensenting the problem in argument
     """
     pb = dict_camel_to_snake(problem)
     tags = pb.pop('tags')

@@ -43,18 +43,6 @@ class CodeforcesUser(models.Model):
         unique=True,
         verbose_name=_("Handle"),
     )
-    email = models.EmailField(
-        verbose_name=_("Email address"),
-        null=True,
-    )
-    vk_id = models.CharField(
-        max_length=255,
-        null=True,
-    )
-    open_id = models.CharField(
-        max_length=255,
-        null=True,
-    )
     first_name = models.CharField(
         max_length=255,
         null=True,
@@ -64,61 +52,6 @@ class CodeforcesUser(models.Model):
         max_length=255,
         null=True,
         verbose_name=_("Last name"),
-    )
-    country = models.CharField(
-        max_length=255,
-        null=True,
-        verbose_name=_("Country"),
-    )
-    city = models.CharField(
-        max_length=255,
-        null=True,
-        verbose_name=_("City"),
-    )
-    organization = models.CharField(
-        max_length=255,
-        null=True,
-        verbose_name=_("Organization"),
-    )
-    contribution = models.IntegerField(
-        verbose_name=_("User contribution"),
-    )
-    rank = models.CharField(
-        max_length=255,
-        null=True,
-        verbose_name=_("Rank"),
-    )
-    rating = models.IntegerField(
-        verbose_name=_("Rating"),
-        default=0
-    )
-    max_rank = models.CharField(
-        max_length=255,
-        null=True,
-        verbose_name=_("User's max rank."),
-    )
-    max_rating = models.IntegerField(
-        null=True,
-        verbose_name=_("Max Rating"),
-    )
-    last_online_time_seconds = models.BigIntegerField(
-        verbose_name=_("Time, when user was last seen online, in UNIX format."),
-    )
-    registration_time_seconds = models.BigIntegerField(
-        verbose_name=_("Time, when user was registered, in UNIX format."),
-    )
-    friend_of_count = models.IntegerField(
-        verbose_name=_("Amount of users who have this user in friends."),
-    )
-    avatar = models.CharField(
-        max_length=255,
-        verbose_name=_("User's avatar URL."),
-        null=True,
-    )
-    title_photo = models.CharField(
-        max_length=255,
-        verbose_name=_("User's title photo URL."),
-        null=True,
     )
     database_user = models.ForeignKey(
         User,
