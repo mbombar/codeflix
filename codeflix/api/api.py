@@ -183,7 +183,12 @@ def solvedsubmissionsduringcontest(contestid):
                 continue
             for member in ranklistrow['party']['members']:
                 user = member['handle']
-                cfuser = CodeforcesUser.objects.get(handle=user)
+                try:
+                    cfuser = CodeforcesUser.objects.get(handle=user)
+                except CodeforcesUser.DoesNotExist:
+                    data = getusers([user])
+                    cfuser = CodeforcesUser(**data)
+                    cfuser.save()
                 participants.append(user)
                 for i, pb in enumerate(problems):
                     problem = Problem.objects.get(name=pb)
