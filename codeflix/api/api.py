@@ -82,7 +82,7 @@ def getratinginfo(contestid):
     response = makecfrequest('contest.ratingChanges?contestId={}'.format(contestid))
     return handleresponse(response)
 
-def _isuseful(contestid, contests=None):
+def _isuseful(contestid, contests=None, check=True):
     """
     From a contest id, decide if we should take it into account.
     It first searches for the contest in the database, and insert it otherwise.
@@ -90,9 +90,9 @@ def _isuseful(contestid, contests=None):
     Not meant to be applied directly
     """
     contest = getcontest(contestid)
-    if contest.useful:
+    if contest.useful or not check:
         # Once the contest has been marked at useful, it remains useful
-        return True, contests
+        return contest.useful, contests
     else:
         # A contest might not be useful yet, so we check usefulness.
         req = makecfrequest('contest.ratingChanges?contestId={}'.format(contestid))
