@@ -61,9 +61,9 @@ def getcontest(contestid):
     try:
         contest = Contest.objects.get(id=contestid)
     except Contest.DoesNotExist:
-        contestlist = getcontestlist()
+        contestslist = getcontestslist()
         contest = list(filter(lambda c: c['id'] == int(contestid), contestslist))[0]
-        date = dict_camel_to_snake(contest)
+        data = dict_camel_to_snake(contest)
         contest = Contest(**data)
         contest.save()
     return contest
