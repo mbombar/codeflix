@@ -186,10 +186,15 @@ def solvedsubmissionsduringcontest(contestid):
                 try:
                     cfuser = CodeforcesUser.objects.get(handle=user)
                 except CodeforcesUser.DoesNotExist:
-                    data = getusers([user])[0]
-                    data = extractuserinfo(data)
-                    cfuser = CodeforcesUser(**data)
-                    cfuser.save()
+                    try:
+                        data = getusers([user])[0]
+                        data = extractuserinfo(data)
+                        cfuser = CodeforcesUser(**data)
+                        cfuser.save()
+                    except CodeforcesIssue as cfissue:
+                        if 'not found' in cfissue.args[0]: # A contestant may not be found by codeforces api ??!
+                            print('CodeforcesIssue : {}'.format(cfissue), sys.stderr)
+                            continue
                 participants.append(user)
                 for i, pb in enumerate(problems):
                     problem = Problem.objects.get(name=pb, contest_id=contestid)
