@@ -167,16 +167,16 @@ def solvedsubmissionsduringcontest(contestid):
         r = makecfrequest('contest.standings?contestId={}'.format(contestid))
         request = handleresponse(r)
         pbs = request['problems']
-
+        problems = []
         for pb in pbs:
             obj = store_pb(pb)
             contest.problems.add(obj)
+            problems.append(obj)
 
         rows = request['rows']
 
         solves = []
         participants = []
-        problems = list(map(lambda p : p['name'], pbs))
 
         for ranklistrow in rows:
             if ranklistrow['party']['participantType'] != 'CONTESTANT':
@@ -196,8 +196,7 @@ def solvedsubmissionsduringcontest(contestid):
                             print('CodeforcesIssue : {}'.format(cfissue), sys.stderr)
                             continue
                 participants.append(user)
-                for i, pb in enumerate(problems):
-                    problem = Problem.objects.get(name=pb, contest_id=contestid)
+                for i, problem in enumerate(problems):
                     pbresult = ranklistrow['problemResults'][i]
                     if pbresult.get('bestSubmissionTimeSeconds'):
                         solved=True
