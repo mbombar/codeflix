@@ -6,7 +6,7 @@ def testgraphcreation():
     assert(len(G.edges()) == 2958)
     print('Testing create_graph')
     # DEBUG PHASE : IT'S TOO SLOW
-    (finalG, finalusers, finalproblems) = generate_graph.create_graph()
+    (finalG, finalusers, finalproblems) = generate_graph.create_graph(check=False)
     print(len(finalG.edges()))
     print('Testing passed !')
 

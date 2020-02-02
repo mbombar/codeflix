@@ -101,18 +101,18 @@ def _isuseful(contestid, contests=None, check=True):
         contest.save()
         return useful, contests
 
-def isuseful(contestid):
+def isuseful(contestid, check=True):
     """
     From a contest id, decide if we should take it into account.
     It first searches for the contest in the database, and insert it otherwise.
     """
-    return _isuseful(contestid)[0]
+    return _isuseful(contestid, check=check)[0]
 
-def filterusefulcontests(contestsidlist):
+def filterusefulcontests(contestsidlist, check):
     """
     Get all useful contests from a list of contest ids
     """
-    return list(filter(isuseful, contestsidlist))
+    return list(filter(lambda cid : isuseful(cid, check=check), contestsidlist))
 
 def getsubmissionslist(contestid):
     """
