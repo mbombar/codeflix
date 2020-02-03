@@ -54,7 +54,7 @@ def realtest(user='LeCaRiBoU'):
     sortedproblems = rec.recommendation(user, users, G)
     print("Number of recommended problems : {}".format(len(sortedproblems)))
     problem = api.Problem.objects.filter(name=sortedproblems[0]).first()
-    print("We recommand {} to try and solve problem {}".format(user, problem))
+    print("We recommand {} to try and solve problem {} : https://codeforces.com/problemset/problem/{}/{}".format(user, problem, problem.contest_id, problem.index)) # Fix URL for old problems...
     print('Testing passed !')
 
 
