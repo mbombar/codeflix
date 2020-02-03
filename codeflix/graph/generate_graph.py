@@ -22,18 +22,19 @@ def add_contest(contestid, G, users_set, pbs_set):
     for (user, pb) in solves:
         add_edge(user, pb, True, G)
 
-def create_graph_from_ids(contestids):
+def create_graph_from_ids(contestids, verbose=True):
     G = nx.Graph()
     users = set()
     problems = set()
     for contestid in contestids:
-        # USED FOR TESTING
-        print('NEW CONTEST ' + str(contestid))
+        if verbose:
+            # USED FOR TESTING
+            print('NEW CONTEST ' + str(contestid))
         add_contest(contestid, G, users, problems)
     return (G, users, problems)
 
-def create_graph(check=True):
+def create_graph(check=True, verbose=True):
     contestslist = api.getcontestslist()
     contestsids = api.getcontestidslist(contestslist)
     usefulids = api.filterusefulcontests(contestsids, check)
-    return create_graph_from_ids(usefulids)
+    return create_graph_from_ids(usefulids, verbose)
