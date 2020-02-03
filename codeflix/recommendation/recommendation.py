@@ -51,4 +51,4 @@ def displayrecommendation(user, graph=None, nb=0, kusers = 20):
     (G, users, problems) = graph
     sortedproblems = recommendation(user, users, G)
     problem = api.Problem.objects.filter(name=sortedproblems[nb]).first()
-    print("We recommend {} to try and solved problem {} : https://codeforces.com/problemset/problem/{}/{}".format(user, problem, problem.contest_id, problem.index))
+    print("We recommend {} to try and solve problem {} : https://codeforces.com/problemset/problem/{}/{}".format(user, problem, problem.contest_id, problem.index))
