@@ -1,4 +1,8 @@
 import networkx as nx
+import sys
+sys.path.append("../")
+from graph import generate_graph
+from api import api
 
 def score(user, otheruser, G):
     ans = 0
@@ -39,3 +43,12 @@ def recommendation(user, users, G, kusers = 20):
     nearestusers = knearestusers(user, kusers, users, G)
     sortedproblems = sortscoreproblems(user, nearestusers, G)
     return sortedproblems
+
+
+def displayrecommendation(user, graph=None, nb=0, kusers = 20):
+    if not graph:
+        graph = generate_graph.create_graph(check=False, verbose=False)
+    (G, users, problems) = graph
+    sortedproblems = recommendation(user, users, G)
+    problem = api.Problem.objects.filter(name=sortedproblems[nb]).first()
+    print("We recommend {} to try and solved problem {} : https://codeforces.com/problemset/problem/{}/{}".format(user, problem, problem.contest_id, problem.index))
