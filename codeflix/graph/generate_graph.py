@@ -2,9 +2,9 @@ import sys
 import time
 
 if '../' not in sys.path:
-    sys.path.append('../api')
+    sys.path.append('../')
 
-import api
+from api import api
 import networkx as nx
 
 def add_edge(user, problem, solved, G):
