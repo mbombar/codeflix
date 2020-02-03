@@ -61,10 +61,17 @@ def realtest(user='LeCaRiBoU'):
 parser = argparse.ArgumentParser("Tests for codeflix recommendation system")
 
 parser.add_argument("-r", "--real", action="store_true", help="Do a test with real values")
+parser.add_argument("-u", "--user", action="store", help="Specify a user", default="LeCaRiBoU")
 
 if __name__=="__main__":
     args = parser.parse_args()
     if args.real:
-        realtest()
+        user = args.user
+        check = bool(api.CodeforcesUser.objects.filter(handle=user))
+        if not check:
+            print("Unknown user {}".format(user))
+        else:
+            print("Doing recommendation for user {}".format(user))
+            realtest(user)
     else:
         testeverything()
