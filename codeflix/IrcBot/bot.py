@@ -287,6 +287,5 @@ class CodeflixBot(irc.bot.SingleServerIRCBot):
         msg = event.arguments[0]
         if event.source.nick.lower() in self.botwhitelist:
             msg = " ".join(msg.split()[1:])
-        conn.privmsg("Pollion", "msg = {}".format(msg))
         if msg.startswith("{}: ".format(self.nick)):
             _handlemsg(self, conn, event, msg)
