@@ -2,6 +2,20 @@ import irc.bot
 import random
 import time
 import json
+import sys
+from api import api
+sys.path.append('../')
+
+from recommendation import recommendation as rec
+from graph import generate_graph
+
+def _getrecommendation(user, bot, conn, kusers=20):
+    if not bot.graph:
+        bot.graph = generate_graph.create_graph(check=False, verbose=False)
+    (G, users, problems) = bot.graph
+    sortedproblems = rec.recommendation(user, users, G, kusers)
+    problem = api.Problem.objects.filter(name=random.choice(sortedproblems[:5])).first()
+    return "I recommend {user} to try and solve problem {problem} : https://codeforces.com/contest/{cid}/problem/{index}".format(user=user, problem=problem, cid=problem.contest_id, index=problem.index)
 
 with open('config.json', 'r') as config:
     """
@@ -117,6 +131,20 @@ def _do_command(bot, conn, event, command, msg):
                     pass
             conn.privmsg(target, "My masters are now {}".format(bot.admins))
             return
+    elif command[0] == "recommend":
+        if len(command) == 1:
+            _crystal_ball(conn, target)
+            return
+        else:
+            # Now, it is case sensitive.
+            torec = msg[1:].strip().split()[2:]
+            for user in torec:
+                try:
+                    getrec = _getrecommendation(user, bot, conn)
+                    conn.privmsg(target, getrec)
+                except KeyError:
+                    conn.privmsg(target, "Unknown user : {}. I skip.".format(user))
+            return
     elif "debug" in command:
         conn.privmsg(source_nick, "event = {}".format(event))
         conn.privmsg(source_nick, "conn.server = {}".format(conn.server))
@@ -164,7 +192,7 @@ class CodeflixBot(irc.bot.SingleServerIRCBot):
              - event.tags = ??
     """
 
-    def __init__(self, server="irc.crans.org", port=6667):
+    def __init__(self, server="irc.crans.org", port=6667, graph=None):
         nick = config.get("nick", "fixyourconfig")
         tmp_nick = nick+"_{}".format(random.randrange(10000, 100000))
         password = config.get("password", "fixyourconfig")
@@ -187,6 +215,7 @@ class CodeflixBot(irc.bot.SingleServerIRCBot):
         self.admins = admins
         self.chanlist = chanlist
         self.privchans = privchans
+        self.graph = graph
 
 
     def give_me_my_nick(self, conn):
