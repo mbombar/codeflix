@@ -5,7 +5,7 @@
     "symb" : "!",
     "admins" : {
 	"irc.crans.org" : [],
-	"irc.rezosup.org" :]
+	"irc.rezosup.org" : []
     },
     "chanlist" : {
 	"irc.crans.org" : [],
