@@ -3,8 +3,8 @@ import random
 import time
 import json
 import sys
-from api import api
 sys.path.append('../')
+from api import api
 
 from recommendation import recommendation as rec
 from graph import generate_graph
