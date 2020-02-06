@@ -201,6 +201,7 @@ class CodeflixBot(irc.bot.SingleServerIRCBot):
         admins = list(set(map(lambda x: x.lower(), config.get("admins", {"irc.crans.org" : ["Pollion"]}).get(server, []))))
         chanlist = config.get("chanlist", {}).get(server, [])
         privchans = config.get("privchans", {}).get(server, [])
+        botwhitelist = list(set(map(lambda x: x.lower(), config.get("botwhitelist", {"irc.crans.org" : []}).get(server, []))))
 
         irc.bot.SingleServerIRCBot.__init__(self,
                                             server_list=[(server, port)],
@@ -216,6 +217,7 @@ class CodeflixBot(irc.bot.SingleServerIRCBot):
         self.chanlist = chanlist
         self.privchans = privchans
         self.graph = graph
+        self.botwhitelist = botwhitelist
 
 
     def give_me_my_nick(self, conn):
@@ -283,5 +285,8 @@ class CodeflixBot(irc.bot.SingleServerIRCBot):
            - event.arguments = A list containing the message.
         """
         msg = event.arguments[0]
+        if event.source.nick.lower() in self.botwhitelist:
+            msg = " ".join(msg.split()[1:])
+        conn.privmsg("Pollion", "msg = {}".format(msg))
         if msg.startswith("{}: ".format(self.nick)):
             _handlemsg(self, conn, event, msg)

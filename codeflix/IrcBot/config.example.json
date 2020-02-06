@@ -13,5 +13,8 @@
     },
     "privchans" : {
 	"irc.crans.org" : []
+    },
+        "botwhitelist" : {
+	"irc.crans.org" : []
     }
 }
