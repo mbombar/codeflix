@@ -112,7 +112,7 @@ def _do_command(bot, conn, event, command, msg):
             return
     elif command[0] == "addadmin":
         if len(command) == 1:
-            _crystall_ball(conn, target)
+            _crystal_ball(conn, target)
             return
         else:
             for a in command[1:]:
@@ -121,7 +121,7 @@ def _do_command(bot, conn, event, command, msg):
             return
     elif command[0] == "deladmin":
         if len(command) == 1:
-            _crystall_ball(conn, target)
+            _crystal_ball(conn, target)
             return
         else:
             for a in command[1:]:
