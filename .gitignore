@@ -11,3 +11,6 @@ static/
 # Nginx and uWSGI configuration files
 *_nginx.conf
 *_uwsgi.ini
+
+# For IRCBot
+config.json

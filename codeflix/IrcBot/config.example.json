@@ -1,0 +1,17 @@
+{
+    "nick" : "fixyourconfig",
+    "password" : "fixyourconfig",
+    "email" : "fixyourconfig@example.com",
+    "symb" : "!",
+    "admins" : {
+	"irc.crans.org" : [],
+	"irc.rezosup.org" :]
+    },
+    "chanlist" : {
+	"irc.crans.org" : [],
+	"irc.rezosup.org" : []
+    },
+    "privchans" : {
+	"irc.crans.org" : []
+    }
+}

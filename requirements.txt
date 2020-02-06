@@ -4,3 +4,4 @@ django >=2.2
 psycopg2
 urllib3
 networkx
+irc
