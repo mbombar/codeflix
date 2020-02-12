@@ -24,13 +24,10 @@ def knearestusers(user, k, userslist, G):
 def sortscoreproblems(user, users, G):
     sumproblems = dict()
     nbproblems = dict()
-    for user in users:
-        for problem in G[user]:
-            if problem not in sumproblems:
-                sumproblems[problem] = 0
-                nbproblems[problem] = 0
-            sumproblems[problem] += G[user][problem]['weight']
-            nbproblems[problem] += 1
+    for u in users:
+        for problem in G[u]:
+            sumproblems[problem] = sumproblems.get(problem, 0) + G[u][problem]['weight']
+            nbproblems[problem] = nbproblems.get(problem, 0) + 1
     l = []
     for pb in sumproblems.keys():
         if (pb not in G[user]) or (G[user][pb]['weight'] == 1):
