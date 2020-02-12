@@ -41,10 +41,13 @@ def recommendation(user, users, G, kusers = 20):
     return sortedproblems
 
 
-def displayrecommendation(user, graph=None, nb=0, kusers = 20):
+def displayrecommendation(user, graph=None, nb=[0], kusers = 20):
+    if isinstance(nb, int):
+        nb = [nb]
     if not graph:
         graph = generate_graph.create_graph(check=False, verbose=False)
     (G, users, problems) = graph
     sortedproblems = recommendation(user, users, G)
-    problem = api.Problem.objects.filter(name=sortedproblems[nb]).first()
-    print("We recommend {} to try and solve problem {} : https://codeforces.com/contest/{cid}/problem/{index}".format(user, problem, cid=problem.contest_id, index=problem.index))
+    for x in nb:
+        problem = api.Problem.objects.filter(name=sortedproblems[x]).first()
+        print("We recommend {} to try and solve problem {} : https://codeforces.com/contest/{cid}/problem/{index}".format(user, problem, cid=problem.contest_id, index=problem.index))
