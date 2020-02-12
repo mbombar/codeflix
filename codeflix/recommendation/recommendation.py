@@ -32,8 +32,7 @@ def sortscoreproblems(user, users, G):
     for pb in sumproblems.keys():
         if (pb not in G[user]) or (G[user][pb]['weight'] == 1):
             l.append((sumproblems[pb] / nbproblems[pb],pb))
-    l.sort()
-    l.reverse()
+    l = list(sorted(filter(lambda x: x[0] < 1, l), reverse=True))
     return list(map(lambda x : x[1], l))
 
 def recommendation(user, users, G, kusers = 20):
