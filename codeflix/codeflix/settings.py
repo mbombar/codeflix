@@ -103,11 +103,11 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-LOGIN_URL='login'
-LOGIN_REDIRECT_URL='index'
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'index'
 
 
-DEFAULT_FROM_EMAIL=settings_local.DEFAULT_FROM_EMAIL
+DEFAULT_FROM_EMAIL = settings_local.DEFAULT_FROM_EMAIL
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/

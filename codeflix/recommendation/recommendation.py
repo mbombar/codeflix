@@ -1,53 +1,57 @@
-import networkx as nx
 import sys
 sys.path.append("../")
-from graph import generate_graph
-from api import api
 
-def score(user, otheruser, G):
+from api import api  # noqa: E402
+from graph import generate_graph  # noqa: E402
+
+
+def score(user, otheruser, g):
     ans = 0
-    for pb in G[user]:
-        if G.has_edge(otheruser, pb):
-            wuser = G[user][pb]['weight']
-            wotheruser = G[otheruser][pb]['weight']
-            ans += (2 * wuser- 1) * (2 * wotheruser - 1)
+    for pb in g[user]:
+        if g.has_edge(otheruser, pb):
+            wuser = g[user][pb]['weight']
+            wotheruser = g[otheruser][pb]['weight']
+            ans += (2 * wuser - 1) * (2 * wotheruser - 1)
     return ans
 
-def knearestusers(user, k, userslist, G):
-    l = []
+
+def knearestusers(user, k, userslist, g):
+    nearestusers = []
     for otheruser in userslist:
         if otheruser != user:
-            l.append((score(user, otheruser, G), otheruser))
-    l.sort()
-    return [otheruser for (_, otheruser) in l[len(l) - k:]]
+            nearestusers.append((score(user, otheruser, g), otheruser))
+    nearestusers.sort()
+    return [otheruser for (_, otheruser) in nearestusers[len(nearestusers) - k:]]
 
-def sortscoreproblems(user, users, G):
+
+def sortscoreproblems(user, users, g):
     sumproblems = dict()
     nbproblems = dict()
     for u in users:
-        for problem in G[u]:
-            sumproblems[problem] = sumproblems.get(problem, 0) + G[u][problem]['weight']
+        for problem in g[u]:
+            sumproblems[problem] = sumproblems.get(problem, 0) + g[u][problem]['weight']
             nbproblems[problem] = nbproblems.get(problem, 0) + 1
-    l = []
+    scoredpbs = []
     for pb in sumproblems.keys():
-        if (pb not in G[user]) or (G[user][pb]['weight'] == 1):
-            l.append((sumproblems[pb] / nbproblems[pb],pb))
-    l = list(sorted(filter(lambda x: x[0] < 1, l), reverse=True))
-    return list(map(lambda x : x[1], l))
+        if (pb not in g[user]) or (g[user][pb]['weight'] == 1):
+            scoredpbs.append((sumproblems[pb] / nbproblems[pb], pb))
+    scoredpbs = list(sorted(filter(lambda x: x[0] < 1, scoredpbs), reverse=True))
+    return list(map(lambda x : x[1], scoredpbs))
 
-def recommendation(user, users, G, kusers = 20):
-    nearestusers = knearestusers(user, kusers, users, G)
-    sortedproblems = sortscoreproblems(user, nearestusers, G)
+
+def recommendation(user, users, g, kusers=20):
+    nearestusers = knearestusers(user, kusers, users, g)
+    sortedproblems = sortscoreproblems(user, nearestusers, g)
     return sortedproblems
 
 
-def displayrecommendation(user, graph=None, nb=[0], kusers = 20):
+def displayrecommendation(user, graph=None, nb=[0], kusers=20):
     if isinstance(nb, int):
         nb = [nb]
     if not graph:
         graph = generate_graph.create_graph(check=False, verbose=False)
-    (G, users, problems) = graph
-    sortedproblems = recommendation(user, users, G)
+    (g, users, problems) = graph
+    sortedproblems = recommendation(user, users, g)
     for x in nb:
         problem = api.Problem.objects.filter(name=sortedproblems[x]).first()
         print("We recommend {} to try and solve problem {} : https://codeforces.com/contest/{cid}/problem/{index}".format(user, problem, cid=problem.contest_id, index=problem.index))

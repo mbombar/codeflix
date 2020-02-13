@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
 
+
 class Attempt(models.Model):
     """
     A model representing an attempt to solve a problem
@@ -30,7 +31,7 @@ class Attempt(models.Model):
     )
 
     def __str__(self):
-        return "Attempt of {} for {} {}--> {}".format(self.author.handle, self.problem.name, "in contest {} ".format(self.contest.id)*bool(self.contest), "Success"*self.solved + "Failure"*(1-self.solved))
+        return "Attempt of {} for {} {}--> {}".format(self.author.handle, self.problem.name, "in contest {} ".format(self.contest.id) * bool(self.contest), "Success" * self.solved + "Failure" * (1 - self.solved))
 
 
 class CodeforcesUser(models.Model):

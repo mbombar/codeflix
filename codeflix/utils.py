@@ -1,6 +1,6 @@
+import re
 import time
 
-import re
 
 def timeit(method):
     """

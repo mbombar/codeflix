@@ -14,8 +14,9 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'codeflix.settings')
 django.setup()
 
 
-from codeforces.models import Attempt, CodeforcesUser, Contest, Problem, ProblemTag
-from utils import dict_camel_to_snake
+from codeforces.models import Attempt, CodeforcesUser, Contest, Problem, ProblemTag  # noqa: E402 I100 I202
+from utils import dict_camel_to_snake  # noqa: E402
+
 
 class CodeforcesIssue(Exception):
     """
@@ -23,6 +24,7 @@ class CodeforcesIssue(Exception):
     """
     def __init__(self, msg=""):
         Exception.__init__(self, msg)
+
 
 def makecfrequest(req):
     """
@@ -32,6 +34,7 @@ def makecfrequest(req):
     request = http.request('GET', 'https://codeforces.com/api/{}'.format(req))
     time.sleep(0.21)  # Codeforces api limits to 5 requests per second.
     return json.loads(request.data)
+
 
 def handleresponse(response):
     """
@@ -47,6 +50,7 @@ def handleresponse(response):
     else:
         raise CodeforcesIssue(response.get('comment', 'Unknown Error'))
 
+
 def getcontestslist(check=True):
     """
     Get the list of all contests.
@@ -56,7 +60,7 @@ def getcontestslist(check=True):
     try:
         response = makecfrequest('contest.list?gym=false')
         return handleresponse(response)
-    except urllib3.MaxRetryError: # When we are BL from codeforces.com ...
+    except urllib3.MaxRetryError:  # When we are BL from codeforces.com ...
         return list(Contest.objects.values())
 
 
@@ -74,6 +78,7 @@ def getcontest(contestid):
         contest.save()
     return contest
 
+
 def getcontestidslist(contestslist):
     """
     From a list of contests, get the list of corresponding ids.
@@ -87,6 +92,7 @@ def getratinginfo(contestid):
     """
     response = makecfrequest('contest.ratingChanges?contestId={}'.format(contestid))
     return handleresponse(response)
+
 
 def _isuseful(contestid, contests=None, check=True):
     """
@@ -107,6 +113,7 @@ def _isuseful(contestid, contests=None, check=True):
         contest.save()
         return useful, contests
 
+
 def isuseful(contestid, check=True):
     """
     From a contest id, decide if we should take it into account.
@@ -114,11 +121,13 @@ def isuseful(contestid, check=True):
     """
     return _isuseful(contestid, check=check)[0]
 
-def filterusefulcontests(contestsidlist, check):
+
+def filterusefulcontests(contestsidlist, check=True):
     """
     Get all useful contests from a list of contest ids
     """
     return list(filter(lambda cid : isuseful(cid, check=check), contestsidlist))
+
 
 def getsubmissionslist(contestid):
     """
@@ -127,12 +136,14 @@ def getsubmissionslist(contestid):
     response = makecfrequest('contest.status?contestId={}'.format(contestid))
     return handleresponse(response)
 
+
 def getusersubmissions(handle):
     """
     Get the list of submissions for a given user.
     """
     response = makecfrequest('user.status?handle={}'.format(handle))
     return handleresponse(response)
+
 
 def solvedsubmissions(listsubmissions):
     """
@@ -153,6 +164,7 @@ def solvedsubmissions(listsubmissions):
             solves.add((solver, problem))
     return (solves, participants, problems)
 
+
 def solvedsubmissionsfromid(contestid):
     """
     Extract solved submissions, participants and problem names
@@ -161,7 +173,8 @@ def solvedsubmissionsfromid(contestid):
     listsubmissions = getsubmissionslist(contestid)
     return solvedsubmissions(listsubmissions)
 
-def solvedsubmissionsduringcontest(contestid):
+
+def solvedsubmissionsduringcontest(contestid):  # noqa: C901
     """
     Extract solved submissions, participants and problem names
     **during** a contest given its contest id.
@@ -198,17 +211,17 @@ def solvedsubmissionsduringcontest(contestid):
                         cfuser = CodeforcesUser(**data)
                         cfuser.save()
                     except CodeforcesIssue as cfissue:
-                        if 'not found' in cfissue.args[0]: # A contestant may not be found by codeforces api ??!
+                        if 'not found' in cfissue.args[0]:  # A contestant may not be found by codeforces api ??!
                             print('CodeforcesIssue : {}'.format(cfissue), sys.stderr)
                             continue
                 participants.append(user)
                 for i, problem in enumerate(problems):
                     pbresult = ranklistrow['problemResults'][i]
                     if pbresult.get('bestSubmissionTimeSeconds'):
-                        solved=True
+                        solved = True
                         solves.append((user, problem.name))
                     else:
-                        solved=False
+                        solved = False
                     a = Attempt(contest=contest, problem=problem, author=cfuser, solved=solved)
                     a.save()
         return (solves, participants, problems)
@@ -221,6 +234,7 @@ def solvedsubmissionsduringcontest(contestid):
         problems = list(map(lambda p : p.name, contest.problems.all()))
         return (solves, list(participants), problems)
 
+
 def getratedusers(active=False):
     """
     Get the list of all rated users.
@@ -228,6 +242,7 @@ def getratedusers(active=False):
     """
     response = makecfrequest('user.ratedList?activeOnly={}'.format(active))
     return handleresponse(response)
+
 
 def getusers(handles=[]):
     """
@@ -237,6 +252,7 @@ def getusers(handles=[]):
     """
     response = makecfrequest('user.info?handles={}'.format(";".join(handles)))
     return handleresponse(response)
+
 
 def extractuserinfo(user):
     """
@@ -250,12 +266,14 @@ def extractuserinfo(user):
             pass
     return dict_camel_to_snake(data)
 
+
 def store(user):
     """
     Create a database object representing the user in argument
     """
     cfuser = extractuserinfo(user)
     obj, created = CodeforcesUser.objects.get_or_create(**cfuser)
+
 
 def store_pb(problem):
     """

@@ -31,7 +31,7 @@ def testusefulness():
         assert(len(pbs) == 6)
         print('Testing getusersubmissions')
         submi = api.getusersubmissions('LeCaRiBoU')
-        assert(len(submi) == 1056)
+        print("LeCaRiBoU has made {} submissions".format(len(submi)))
         print('Testing passed !')
     except AssertionError:
         print('Error !')

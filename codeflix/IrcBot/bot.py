@@ -1,24 +1,24 @@
-import irc.bot
-import random
-import time
 import json
+import random
 import sys
-sys.path.append('../')
-from api import api
-
-import asyncio
 import threading
+import time
 
-from recommendation import recommendation as rec
-from graph import generate_graph
+import irc.bot
+sys.path.append('../')
+from api import api  # noqa: E402 I100
+from graph import generate_graph  # noqa: E402 I100
+from recommendation import recommendation as rec  # noqa: E402 I100
+
 
 def _getrecommendation(user, bot, conn, kusers=20):
     if not bot.graph:
         bot.graph = generate_graph.create_graph(check=False, verbose=False)
-    (G, users, problems) = bot.graph
-    sortedproblems = rec.recommendation(user, users, G, kusers)
+    (g, users, problems) = bot.graph
+    sortedproblems = rec.recommendation(user, users, g, kusers)
     problem = api.Problem.objects.filter(name=random.choice(sortedproblems[:5])).first()
     return "I recommend {user} to try and solve problem {problem} : https://codeforces.com/contest/{cid}/problem/{index}".format(user=user, problem=problem, cid=problem.contest_id, index=problem.index)
+
 
 with open('config.json', 'r') as config:
     """
@@ -32,6 +32,7 @@ with open('config.json', 'r') as config:
       - privchans = A dict `server -> List of tuples (privatechannel, key) to connect to`.
     """
     config = json.load(config)
+
 
 def _iscommand(msg, bot):
     """
@@ -47,6 +48,7 @@ def _iscommand(msg, bot):
     else:
         return False, None
 
+
 def _get_target(event):
     """
     If the event is a privmsg, then answers in query. Else, answers in the channel.
@@ -56,6 +58,7 @@ def _get_target(event):
     elif event.type == "pubmsg":
         return event.target
 
+
 def _crystal_ball(conn, target):
     """
     When the bot can't guess what it is asked.
@@ -63,7 +66,8 @@ def _crystal_ball(conn, target):
     conn.privmsg(target, "How can I guess ?!")
     conn.action(target, "takes out its crystal ball")
 
-def _do_command(bot, conn, event, command, msg):
+
+def _do_command(bot, conn, event, command, msg):  # noqa: C901
     """
     Do the command.
     """
@@ -174,7 +178,6 @@ def _handlemsg(bot, conn, event, msg):
         _do_command(bot, conn, event, command, msg)
 
 
-
 class CodeflixBot(irc.bot.SingleServerIRCBot):
     """
     Main class to define an IRCBot with default values to connect to Crans IRC server.
@@ -197,7 +200,7 @@ class CodeflixBot(irc.bot.SingleServerIRCBot):
 
     def __init__(self, server="irc.crans.org", port=6667, graph=None):
         nick = config.get("nick", "fixyourconfig")
-        tmp_nick = nick+"_{}".format(random.randrange(10000, 100000))
+        tmp_nick = nick + "_{}".format(random.randrange(10000, 100000))
         password = config.get("password", "fixyourconfig")
         email = config.get("email", "fixyourconfig@example.org")
         symb = config.get("symb", "!")
@@ -210,7 +213,7 @@ class CodeflixBot(irc.bot.SingleServerIRCBot):
                                             server_list=[(server, port)],
                                             nickname=tmp_nick,
                                             realname=nick,
-        )
+                                            )
 
         self.nick = tmp_nick
         self.password = password
@@ -222,13 +225,12 @@ class CodeflixBot(irc.bot.SingleServerIRCBot):
         self.graph = graph
         self.botwhitelist = botwhitelist
 
-
     def give_me_my_nick(self, conn):
         """Recover it's nick."""
 
         nick = config.get("nick", "fixyourconfig")
-        conn.privmsg("NickServ","RECOVER {} {}".format(nick, self.password))
-        conn.privmsg("NickServ","RELEASE {} {}".format(nick, self.password))
+        conn.privmsg("NickServ", "RECOVER {} {}".format(nick, self.password))
+        conn.privmsg("NickServ", "RELEASE {} {}".format(nick, self.password))
         self.nick = nick
         time.sleep(0.2)
         conn.nick(self.nick)
@@ -294,9 +296,7 @@ class CodeflixBot(irc.bot.SingleServerIRCBot):
             _handlemsg(self, conn, event, msg)
 
 
-
 def startbot(graph=None):
-    loop = asyncio.get_event_loop()
     bot = CodeflixBot(graph=graph)
     bot_t = threading.Thread(target=bot.start)
     bot_t.start()
