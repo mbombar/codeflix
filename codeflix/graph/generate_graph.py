@@ -34,7 +34,7 @@ def create_graph_from_ids(contestids, verbose=True):
     return (G, users, problems)
 
 def create_graph(check=True, verbose=True):
-    contestslist = api.getcontestslist()
+    contestslist = api.getcontestslist(check)
     contestsids = api.getcontestidslist(contestslist)
     usefulids = api.filterusefulcontests(contestsids, check)
     return create_graph_from_ids(usefulids, verbose)

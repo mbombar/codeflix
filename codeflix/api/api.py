@@ -47,12 +47,18 @@ def handleresponse(response):
     else:
         raise CodeforcesIssue(response.get('comment', 'Unknown Error'))
 
-def getcontestslist():
+def getcontestslist(check=True):
     """
     Get the list of all contests.
     """
-    response = makecfrequest('contest.list?gym=false')
-    return handleresponse(response)
+    if not check:
+        return list(Contest.objects.values())
+    try:
+        response = makecfrequest('contest.list?gym=false')
+        return handleresponse(response)
+    except urllib3.MaxRetryError: # When we are BL from codeforces.com ...
+        return list(Contest.objects.values())
+
 
 def getcontest(contestid):
     """
