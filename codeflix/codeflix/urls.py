@@ -17,9 +17,14 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import include, path
 
+from . import views
 
 urlpatterns = [
     path('', auth_views.LoginView.as_view(template_name='index.html'), name='index'),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/signup/', views.UserCreateView.as_view(), name="signup"),
+    path('accounts/activate/sent', views.UserActivationEmailSentView.as_view(), name='account_activation_sent'),
+    path('accounts/activate/<uidb64>/<token>', views.UserActivateView.as_view(), name='account_activation'),
+    path('accounts/activate/done', views.UserActivateDoneView.as_view(), name='account_activation_done'),
     path('admin/', admin.site.urls),
 ]
