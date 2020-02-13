@@ -2,8 +2,9 @@
 For more information, please refer to the official documentation of the Django Project.
 """
 
-
 SECRET_KEY = 'VerySecureSecretKey'
+
+DEBUG = True
 
 DATABASES = {
     'default': {
