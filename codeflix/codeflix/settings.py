@@ -12,7 +12,10 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 
-import codeflix.settings_local as settings_local
+try:
+    from . import settings_local as settings_local
+except ImportError:
+    from . import settings_local_example as settings_local
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
