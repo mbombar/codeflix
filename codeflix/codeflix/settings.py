@@ -40,6 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'codeforces',
+
+    # For the frontend
+    'bootstrap4',
+    'django_icons',
 ]
 
 MIDDLEWARE = [
@@ -57,7 +61,9 @@ ROOT_URLCONF = 'codeflix.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates').replace('\\', '/'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -96,6 +102,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+LOGIN_URL='login'
+LOGIN_REDIRECT_URL='index'
+
+
+DEFAULT_FROM_EMAIL=settings_local.DEFAULT_FROM_EMAIL
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
