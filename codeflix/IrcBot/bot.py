@@ -6,6 +6,9 @@ import sys
 sys.path.append('../')
 from api import api
 
+import asyncio
+import threading
+
 from recommendation import recommendation as rec
 from graph import generate_graph
 
@@ -289,3 +292,11 @@ class CodeflixBot(irc.bot.SingleServerIRCBot):
             msg = " ".join(msg.split()[1:])
         if msg.startswith("{}: ".format(self.nick)):
             _handlemsg(self, conn, event, msg)
+
+
+
+def startbot(graph=None):
+    loop = asyncio.get_event_loop()
+    bot = CodeflixBot(graph=graph)
+    bot_t = threading.Thread(target=bot.start)
+    bot_t.start()
