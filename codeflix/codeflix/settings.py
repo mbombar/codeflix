@@ -75,6 +75,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'codeflix.context_processors.site_name',
             ],
         },
     },
@@ -134,3 +135,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATIC_ROOT = settings_local.STATIC_ROOT
+
+
+# Cosmetic variables
+SITE_NAME = settings_local.SITE_NAME

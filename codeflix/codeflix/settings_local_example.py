@@ -23,3 +23,5 @@ STATIC_ROOT = None  # The absolute path to the directory of the static files.
 
 DEFAULT_FROM_EMAIL = "webmaster@localhost"
 EMAIL_HOST = "localhost"
+
+SITE_NAME = None

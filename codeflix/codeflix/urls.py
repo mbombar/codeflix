@@ -25,6 +25,5 @@ urlpatterns = [
     path('accounts/signup/', views.UserCreateView.as_view(), name="signup"),
     path('accounts/activate/sent', views.UserActivationEmailSentView.as_view(), name='account_activation_sent'),
     path('accounts/activate/<uidb64>/<token>', views.UserActivateView.as_view(), name='account_activation'),
-    path('accounts/activate/done', views.UserActivateDoneView.as_view(), name='account_activation_done'),
     path('admin/', admin.site.urls),
 ]

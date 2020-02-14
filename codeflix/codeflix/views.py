@@ -39,12 +39,13 @@ class UserCreateView(CreateView):
         user.is_active = False
         user.save()  # Sends a signal to create the corresponding profile object.
         site = get_current_site(self.request)
-        subject = "Activate your {} account".format(site.name)
+        site_name = settings.SITE_NAME or site.name
+        subject = "Activate your {} account".format(site_name)
         message = loader.render_to_string('registration/account_activation_email.html',
                                           {
                                               'user': user,
                                               'domain': site.domain,
-                                              'site_name': site.name,
+                                              'site_name': site_name,
                                               'protocol': 'https' if use_https else 'http',
                                               'token': self.token_generator.make_token(user),
                                               'uid': urlsafe_base64_encode(force_bytes(user.pk)),
@@ -54,8 +55,8 @@ class UserCreateView(CreateView):
 
 
 class UserActivateView(TemplateView):
-    succes_url = reverse_lazy('account_activation_done')
     title = _("Account Activation")
+    template_name = 'registration/account_activation_complete.html'
 
     @method_decorator(csrf_protect)
     def dispatch(self, *args, **kwargs):
@@ -92,6 +93,7 @@ class UserActivateView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['login_url'] = resolve_url(settings.LOGIN_URL)
         if self.validlink:
             context['validlink'] = True
         else:
@@ -99,19 +101,6 @@ class UserActivateView(TemplateView):
                 'title': _('Account Activation unsuccessful'),
                 'validlink': False,
             })
-        return context
-
-
-class UserActivateDoneView(TemplateView):
-    template_name = 'registration/account_activation_complete.html'
-    title = _('Account activation complte')
-
-    def get_context_data(self, **kwargs):
-        """
-        Provides the template with the login_url.
-        """
-        context = super().get_context_data(**kwargs)
-        context['login_url'] = resolve_url(settings.LOGIN_URL)
         return context
 
 
