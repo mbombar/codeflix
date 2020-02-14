@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% load bootstrap4 %}
+
+{% block title %} Edit {{ user.username }} {% endblock %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div style="text-align:center" class="thumbnails">
+    <img src="{{ avatar }}"/>
+  </div>
+  {% bootstrap_form form %}
+  <button class="btn btn-success" type="submit">
+    <i class="fa fa-sign-in"></i> Edit
+  </button>
+  <a href="{% url 'account_summary' user.pk %}" type="button" class="btn btn-danger">
+    Cancel
+  </a>
+</form>
+{% endblock %}

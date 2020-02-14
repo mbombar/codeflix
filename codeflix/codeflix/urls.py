@@ -13,17 +13,20 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls.static import static
 from django.contrib import admin
-from django.contrib.auth import views as auth_views
 from django.urls import include, path
 
-from . import views
+from . import settings, views
 
 urlpatterns = [
-    path('', auth_views.LoginView.as_view(template_name='index.html'), name='index'),
+    path('', views.IndexView.as_view(), name='index'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/signup/', views.UserCreateView.as_view(), name="signup"),
-    path('accounts/activate/sent', views.UserActivationEmailSentView.as_view(), name='account_activation_sent'),
-    path('accounts/activate/<uidb64>/<token>', views.UserActivateView.as_view(), name='account_activation'),
+    path('accounts/activate/sent/', views.UserActivationEmailSentView.as_view(), name='account_activation_sent'),
+    path('accounts/activate/<uidb64>/<token>/', views.UserActivateView.as_view(), name='account_activation'),
+    path('accounts/<int:pk>/summary/', views.UserSummaryView.as_view(), name='account_summary'),
+    path('accounts/<int:pk>/update/', views.UserUpdateView.as_view(), name='account_update'),
+    path('accounts/<int:pk>/avatar/update/', views.AvatarUpdateView.as_view(), name='avatar_update'),
     path('admin/', admin.site.urls),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -11,6 +11,7 @@ class Profile(models.Model):
     The Profile of a user. Adds new fields.
     """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    avatar = models.ImageField(upload_to='avatars', default='avatars/unknown.png')
     email_confirmed = models.BooleanField(default=False)
 
 

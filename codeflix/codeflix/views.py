@@ -1,7 +1,8 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import ValidationError
-from django.shortcuts import resolve_url
+from django.shortcuts import redirect, resolve_url
 from django.template import loader
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
@@ -9,13 +10,43 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.csrf import csrf_protect
-from django.views.generic import CreateView, TemplateView
+from django.views.generic import CreateView, TemplateView, UpdateView
 
 from . import settings
 from .forms import SignUpForm
+from .models import Profile
 from .tokens import account_activation_token
 
 # create your views here.
+
+
+class IndexView(TemplateView):
+    """
+    Homepage
+    """
+    template_name = 'index.html'
+    title = _('Homepage')
+
+    def dispatch(self, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            return redirect('account_summary', pk=self.request.user.pk)
+        return super().dispatch(*args, **kwargs)
+
+
+class UserSummaryView(LoginRequiredMixin, TemplateView):
+    """
+    Homepage when user is loggedIn
+    """
+    template_name = 'index.html'
+    title = _('Homepage')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'avatar': self.request.user.profile.avatar.url,
+            'codeforcesusers': self.request.user.codeforcesuser_set.all(),
+        })
+        return context
 
 
 class UserCreateView(CreateView):
@@ -107,3 +138,26 @@ class UserActivateView(TemplateView):
 class UserActivationEmailSentView(TemplateView):
     template_name = 'registration/account_activation_email_sent.html'
     title = _('Account activation email sent')
+
+
+class UserUpdateView(LoginRequiredMixin, UpdateView):
+    model = User
+    fields = ["username", "first_name", "last_name", "email"]
+    template_name = "account/profile_update.html"
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["avatar"] = context['user'].profile.avatar.url
+        return context
+
+    def get_success_url(self, *args, **kwargs):
+        return reverse_lazy('account_summary', kwargs={'pk': self.object.id})
+
+
+class AvatarUpdateView(LoginRequiredMixin, UpdateView):
+    model = Profile
+    fields = ['avatar']
+    template_name = "account/avatar_update.html"
+
+    def get_success_url(self, *args, **kwargs):
+        return reverse_lazy('account_summary', kwargs={'pk': self.object.user.id})

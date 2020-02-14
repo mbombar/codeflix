@@ -14,3 +14,7 @@ static/
 
 # For IRCBot
 config.json
+
+# Avatars
+codeflix/media/avatars/*
+!codeflix/media/avatars/unknown.png

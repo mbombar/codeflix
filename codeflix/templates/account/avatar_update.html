@@ -1,39 +1,31 @@
 {% extends "base.html" %}
 
-{% block title %} Homepage {% endblock %}
+{% load bootstrap4 %}
+
+{% block title %} Edit {{ user.username }} {% endblock %}
 
 {% block content %}
-{% if request.user.is_authenticated %}
-<h2>Welcome {{ user.username }}</h2>
+<h2>Edit {{ user.username }}</h2>
 
-
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {% bootstrap_form form %}
+  <button class="btn btn-success" type="submit">
+    <i class="fa fa-sign-in"></i> Edit Picture
+  </button>
+</form>
 <div class="col-sm-12 col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
   <div class="panel panel-info">
     <table class="table tabled-condensed table-hover">
-      <tr>
-	<td style="text-align:center" colspan=2>
-	  <div class="thumbnails">
-	    <img src="{{ avatar }}"/>
-	  </div>
-	</td>
-      </tr>
       <tr><th>Username</th><td>{{ user.username }}</td></tr>
       <tr><th>First Name</th><td>{{ user.first_name }}</td></tr>
       <tr><th>Last Name</th><td>{{ user.last_name }}</td></tr>
       <tr><th>Email</th><td>{{ user.email }}</td></tr>
       <tr><th>Codeforces Handle</th><td>{% for cf in codeforcesusers %} {{ cf }} {% endfor %} </td></tr>
     </table>
-    <a href="{% url 'account_update' user.pk %}" type="button" class="btn btn-success">
-      Edit
-    </a>
-    <a href="{% url 'avatar_update' user.profile.pk %}" type="button" class="btn btn-success">
-      Change Picture
-    </a>
   </div>
 </div>
-
-{% else %}
-<h2>Welcome to {{ sitename }} !!</h2>
-{% endif %}
-
+<a href="{% url 'account_summary' user.pk %}" type="button" class="btn btn-danger">
+  Cancel
+</a>
 {% endblock %}

@@ -7,3 +7,4 @@ networkx
 irc
 django-bootstrap4
 django-icons
+Pillow
