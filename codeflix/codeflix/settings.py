@@ -111,6 +111,7 @@ LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'index'
 
 
+EMAIL_HOST = settings_local.EMAIL_HOST
 DEFAULT_FROM_EMAIL = settings_local.DEFAULT_FROM_EMAIL
 
 # Internationalization

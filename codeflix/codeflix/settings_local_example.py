@@ -22,3 +22,4 @@ ALLOWED_HOSTS = []  # The list of domain names that Django is allowed to serve.
 STATIC_ROOT = None  # The absolute path to the directory of the static files.
 
 DEFAULT_FROM_EMAIL = "webmaster@localhost"
+EMAIL_HOST = "localhost"
