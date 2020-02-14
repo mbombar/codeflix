@@ -1,4 +1,3 @@
-from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -36,7 +35,7 @@ class Attempt(models.Model):
 
 class CodeforcesUser(models.Model):
     """
-    A Codeforces User object. May be linked to a database user.
+    A Codeforces User object.
     """
 
     handle = models.CharField(
@@ -53,12 +52,6 @@ class CodeforcesUser(models.Model):
         max_length=255,
         null=True,
         verbose_name=_("Last name"),
-    )
-    database_user = models.ForeignKey(
-        User,
-        blank=True,
-        null=True,
-        on_delete=models.SET_NULL,
     )
 
     def __str__(self):

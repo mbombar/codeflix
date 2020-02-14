@@ -10,10 +10,15 @@ from .models import Profile
 class ProfileInline(admin.StackedInline):
     model = Profile
     can_delete = False
+    autocomplete_fields = ["cfuser"]
 
 
 class UserAdmin(BaseUserAdmin):
     inlines = (ProfileInline,)
+    list_display = ["username", "first_name", "last_name", "email", "_cfuser"]
+
+    def _cfuser(self, obj):
+        return obj.profile.cfuser
 
 
 admin.site.unregister(User)

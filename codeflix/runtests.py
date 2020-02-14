@@ -39,6 +39,7 @@ if not settings.configured:
             'django.contrib.sites',
             'django.contrib.messages',
             'codeflix',
+            'codeforces',
         ),
         MIDDLEWARE=(
             "django.middleware.common.CommonMiddleware",

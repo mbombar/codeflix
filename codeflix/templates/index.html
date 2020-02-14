@@ -21,7 +21,7 @@
       <tr><th>First Name</th><td>{{ user.first_name }}</td></tr>
       <tr><th>Last Name</th><td>{{ user.last_name }}</td></tr>
       <tr><th>Email</th><td>{{ user.email }}</td></tr>
-      <tr><th>Codeforces Handle</th><td>{% for cf in codeforcesusers %} {{ cf }} {% endfor %} </td></tr>
+      <tr><th>Codeforces Handle</th><td>{% if cfuser %} {{ cfuser.handle }} {% endif %} </td></tr>
     </table>
     <a href="{% url 'account_update' user.pk %}" type="button" class="btn btn-success">
       Edit
