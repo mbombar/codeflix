@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% load bootstrap4 %}
+
+{% block title %} Edit {{ user.username }} {% endblock %}
+
+
+{% block content %}
+{{ form.media.css }}
+<h2>Edit {{ user.username }}</h2>
+
+<div class="col-sm-12 col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
+  <div class="panel panel-info">
+    <table class="table tabled-condensed table-hover">
+      <tr><th>Username</th><td>{{ user.username }}</td></tr>
+      <tr><th>First Name</th><td>{{ user.first_name }}</td></tr>
+      <tr><th>Last Name</th><td>{{ user.last_name }}</td></tr>
+      <tr><th>Email</th><td>{{ user.email }}</td></tr>
+      <tr><th>Codeforces User</th><td> <form method="post" class="form-horizontal uniForm">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      <button class="btn btn-success" type="submit">
+	<i class="fa fa-sign-in"></i> Edit
+      </button>
+      <a href="{% url 'account_summary' user.pk %}" type="button" class="btn btn-danger">
+	Cancel
+      </a>
+    </form>
+  <</td></tr>
+    </table>
+    
+  </div>
+</div>
+{{ form.media.js }}
+{% endblock %}

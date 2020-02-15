@@ -13,7 +13,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.views.generic import CreateView, TemplateView, UpdateView
 
 from . import settings
-from .forms import SignUpForm
+from .forms import CodeforcesUpdateForm, SignUpForm
 from .models import Profile
 from .tokens import account_activation_token
 
@@ -158,6 +158,15 @@ class AvatarUpdateView(LoginRequiredMixin, UpdateView):
     model = Profile
     fields = ['avatar']
     template_name = "account/avatar_update.html"
+
+    def get_success_url(self, *args, **kwargs):
+        return reverse_lazy('account_summary', kwargs={'pk': self.object.user.id})
+
+
+class CodeforcesUpdateView(LoginRequiredMixin, UpdateView):
+    model = Profile
+    form_class = CodeforcesUpdateForm
+    template_name = "account/codeforces_update.html"
 
     def get_success_url(self, *args, **kwargs):
         return reverse_lazy('account_summary', kwargs={'pk': self.object.user.id})

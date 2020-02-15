@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     # For the frontend
     'bootstrap4',
     'django_icons',
+    'django_select2',
 ]
 
 MIDDLEWARE = [

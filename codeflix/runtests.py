@@ -40,6 +40,7 @@ if not settings.configured:
             'django.contrib.messages',
             'codeflix',
             'codeforces',
+            'django_select2',
         ),
         MIDDLEWARE=(
             "django.middleware.common.CommonMiddleware",
