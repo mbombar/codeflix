@@ -9,3 +9,4 @@ django-bootstrap4
 django-icons
 Pillow
 django_select2
+python-memcached
