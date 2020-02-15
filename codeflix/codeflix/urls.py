@@ -29,6 +29,7 @@ urlpatterns = [
     path('accounts/<int:pk>/update/', views.UserUpdateView.as_view(), name='account_update'),
     path('accounts/<int:pk>/avatar/update/', views.AvatarUpdateView.as_view(), name='avatar_update'),
     path('accounts/<int:pk>/codeforces/update/', views.CodeforcesUpdateView.as_view(), name='codeforces_update'),
+    path('recommendation/<int:pk>/', views.RecommendationView.as_view(), name='recommendation'),
     path('admin/', admin.site.urls),
     path('select2/', include('django_select2.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

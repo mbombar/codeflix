@@ -1,3 +1,7 @@
+import os
+import pickle
+
+from codeforces.models import Problem
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
@@ -11,13 +15,23 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import CreateView, TemplateView, UpdateView
+from recommendation import recommendation as rec
 
 from . import settings
 from .forms import CodeforcesUpdateForm, SignUpForm
 from .models import Profile
 from .tokens import account_activation_token
 
+
 # create your views here.
+
+try:
+    with open(os.path.join(settings.BASE_DIR, "codeflix-graph"), "rb") as pgraph:
+        graph = pickle.load(pgraph, fix_imports=False)
+except (TypeError, FileNotFoundError, pickle.PickleError, pickle.UnpicklingError):
+    graph = None
+
+baseurl = "https://codeforces.com/contest/{cid}/problem/{index}"
 
 
 class IndexView(TemplateView):
@@ -170,3 +184,58 @@ class CodeforcesUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self, *args, **kwargs):
         return reverse_lazy('account_summary', kwargs={'pk': self.object.user.id})
+
+
+class RecommendationView(TemplateView):
+    """
+    kwargs = {pk: primary key of the user}
+    """
+    template_name = "recommendation/generic.html"
+
+    def dispatch(self, *args, **kwargs):
+        assert 'pk' in kwargs
+        uid = kwargs.get('pk')
+        handle = self.get_cfuser(uid)
+        self.recommendation = False
+
+        if handle is not None and graph is not None:
+            self.recommendation = True
+            return super().dispatch(*args, **kwargs)
+        else:
+            # Display the "Recommendation unsuccessful" page
+            return self.render_to_response(self.get_context_data())
+
+    def get_cfuser(self, uid):
+        try:
+            user = User.objects.get(pk=uid)
+            handle = user.profile.cfuser
+        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+            handle = None
+        return handle
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+
+        if not self.recommendation:
+            context.update({
+                'title' : _('Recommendation failed'),
+                'recommendation' : False,
+                'user': self.request.user,
+            })
+        else:
+            user = User.objects.get(id=kwargs.get('pk'))
+            handle = user.profile.cfuser.handle
+            problems = rec.recommendation(handle, graph[1], graph[0])[:5]
+            recpb = []
+            for pb in problems:
+                pbobj = Problem.objects.filter(name=pb).first()
+                pburl = baseurl.format(cid=pbobj.contest_id, index=pbobj.index)
+                recpb.append((pb, pburl))
+            context.update({
+                'title': _('Recommendation {}'.format(user)),
+                'recommendation': True,
+                'handle': handle,
+                'problems': recpb,
+                'user': self.request.user,
+            })
+        return context

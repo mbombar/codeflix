@@ -35,6 +35,11 @@
     <a href="{% url 'codeforces_update' user.profile.pk %}" type="button" class="btn btn-warning">
       Change codeforces Handle
     </a>
+    {% if cfuser %}
+    <a href="{% url 'recommendation' user.pk %}" type="button" class="btn btn-info">
+      Get recommendation
+    </a>
+    {% endif %}
   </div>
 </div>
 

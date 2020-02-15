@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% load bootstrap4 %}
+
+{% block title %} {{ title }} {% endblock %}
+
+{% block content %}
+
+{% if recommendation %}
+
+
+
+<h2>Recommendation for {{ handle }}</h2>
+
+We recommend to try and solve these problems
+
+<div class="panel panel-info">
+  <table class="table tabled-condensed table-hover">
+    {% for pb, pburl in problems %}
+    <tr><td> <a href="{{ pburl }}">{{ pb }}</a></td></tr>
+    {% endfor %}
+  </table>
+</div>   
+
+{% else %}
+
+<p>Recommendation failed.</p>
+
+{% endif %}
+<p></p>
+<p>Click <a href="{% url 'index' %}">here</a> to come back to home page.</p>
+
+{% endblock %}
