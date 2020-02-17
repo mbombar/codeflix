@@ -36,7 +36,7 @@ def testnearest():
 def testrecommendation():
     g = createtestgraph()
     users = ['Alice', 'Bob', 'Charlie']
-    recommended = rec.recommendation('Alice', users, g, 1)
+    recommended = rec.recommendation('Alice', users, g, 1, debug = False)
     assert(recommended == ['2'])
 
 
