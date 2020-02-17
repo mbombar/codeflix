@@ -28,6 +28,7 @@ urlpatterns = [
     path('accounts/<int:pk>/summary/', views.UserSummaryView.as_view(), name='account_summary'),
     path('accounts/<int:pk>/update/', views.UserUpdateView.as_view(), name='account_update'),
     path('accounts/<int:pk>/avatar/update/', views.AvatarUpdateView.as_view(), name='avatar_update'),
+    path('accounts/<int:pk>/avatar/update/erase/', views.AvatarEraseView.as_view(), name='avatar_erase'),
     path('accounts/<int:pk>/codeforces/update/', views.CodeforcesUpdateView.as_view(), name='codeforces_update'),
     path('recommendation/<int:pk>/', views.RecommendationView.as_view(), name='recommendation'),
     path('admin/', admin.site.urls),
