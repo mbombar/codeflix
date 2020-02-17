@@ -28,7 +28,7 @@ from .tokens import account_activation_token
 try:
     with open(os.path.join(settings.BASE_DIR, "codeflix-graph"), "rb") as pgraph:
         graph = pickle.load(pgraph, fix_imports=False)
-except (TypeError, FileNotFoundError, pickle.PickleError, pickle.UnpicklingError):
+except (TypeError, FileNotFoundError, EOFError, pickle.PickleError, pickle.UnpicklingError):
     graph = None
 
 baseurl = "https://codeforces.com/contest/{cid}/problem/{index}"
