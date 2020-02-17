@@ -105,4 +105,4 @@ You will also need to edit your `settings_local.py` to provide a list of `ALLOWE
 
 Finally, collect the static files.
 
-    $ ./manage.py collectstatics
+    $ ./manage.py collectstatic
