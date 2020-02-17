@@ -230,7 +230,8 @@ class RecommendationView(TemplateView):
             for pb in problems:
                 pbobj = Problem.objects.filter(name=pb).first()
                 pburl = baseurl.format(cid=pbobj.contest_id, index=pbobj.index)
-                recpb.append((pb, pburl))
+                tags = pbobj.tags.all()
+                recpb.append((pb, pburl, tags))
             context.update({
                 'title': _('Recommendation {}'.format(user)),
                 'recommendation': True,

@@ -16,8 +16,9 @@ We recommend to try and solve these problems
 
 <div class="panel panel-info">
   <table class="table tabled-condensed table-hover">
-    {% for pb, pburl in problems %}
-    <tr><td> <a href="{{ pburl }}">{{ pb }}</a></td></tr>
+    <tr><td>Name</td><td>Tags</td></tr>
+    {% for pb, pburl, tags in problems %}
+    <tr><td> <a href="{{ pburl }}">{{ pb }}</a></td><td><ul>{% for tag in tags %}<li>{{ tag.name }}</li>{% endfor %}</ul></td></tr>
     {% endfor %}
   </table>
 </div>   
