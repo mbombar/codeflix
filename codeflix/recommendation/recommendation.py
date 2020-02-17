@@ -6,9 +6,11 @@ from graph import generate_graph  # noqa: E402
 
 
 def score(user, otheruser, g):
+    if len(g[user]) < len(g[otheruser]):
+        return score(otheruser, user, g)
     ans = 0
-    for pb in g[user]:
-        if g.has_edge(otheruser, pb):
+    for pb in g[otheruser]:
+        if g.has_edge(user, pb):
             wuser = g[user][pb]['weight']
             wotheruser = g[otheruser][pb]['weight']
             ans += (2 * wuser - 1) * (2 * wotheruser - 1)

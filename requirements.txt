@@ -1,7 +1,7 @@
-wheel
 setuptools
+wheel
 django >=2.2
-psycopg2
+psycopg2-binary
 urllib3
 networkx
 irc
