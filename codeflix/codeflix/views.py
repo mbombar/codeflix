@@ -6,8 +6,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import ValidationError
-from django.db import models
-from django.http import HttpResponse
 from django.shortcuts import redirect, resolve_url
 from django.template import loader
 from django.urls import reverse_lazy
@@ -178,6 +176,7 @@ class AvatarUpdateView(LoginRequiredMixin, UpdateView):
     def get_success_url(self, *args, **kwargs):
         return reverse_lazy('account_summary', kwargs={'pk': self.object.user.id})
 
+
 class AvatarEraseView(LoginRequiredMixin, View):
     def get(self, *args, **kwargs):
         user = User.objects.get(id=kwargs.get('pk'))
@@ -190,6 +189,7 @@ class AvatarEraseView(LoginRequiredMixin, View):
         Profile.objects.create(user=user, cfuser=handle, email_confirmed=useremailconfirmed)
         user.profile.save()
         return redirect('account_summary', pk=kwargs['pk'])
+
 
 class CodeforcesUpdateView(LoginRequiredMixin, UpdateView):
     model = Profile

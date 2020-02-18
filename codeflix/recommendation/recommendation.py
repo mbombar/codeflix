@@ -40,15 +40,17 @@ def sortscoreproblems(user, users, g):
     scoredpbs = list(sorted(filter(lambda x: x[0] < 1, scoredpbs), reverse=True))
     return list(map(lambda x : x[1], scoredpbs))
 
+
 def update_user_submissions(user, g):
     listsubmissions = api.getusersubmissions(user)
     for submission in listsubmissions:
         pb = submission['problem']['name']
         ok_submission = (submission['verdict'] == 'OK')
         if pb not in g[user] or (g[user][pb]['weight'] > 0.5 and ok_submission):
-            g.add_edge(user, pb, weight = (0 if ok_submission else 1))
+            g.add_edge(user, pb, weight=(0 if ok_submission else 1))
 
-def recommendation(user, users, g, kusers=20, debug = False):
+
+def recommendation(user, users, g, kusers=20, debug=False):
     if not debug:
         update_user_submissions(user, g)
     nearestusers = knearestusers(user, kusers, users, g)
