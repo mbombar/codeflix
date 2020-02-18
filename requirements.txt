@@ -10,3 +10,6 @@ django-icons
 Pillow
 django_select2
 python-memcached
+djangorestframework
+markdown
+django-filter
