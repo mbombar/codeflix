@@ -44,11 +44,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'codeflix',
     'codeforces',
-    'myapi',
-    # graph
-    'api',
-    'recommendation',
-    'graph',
 
     # For the frontend
     'bootstrap4',
