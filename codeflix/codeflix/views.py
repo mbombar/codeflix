@@ -1,5 +1,6 @@
 import os
 import pickle
+import random
 
 from codeforces.models import Problem
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -55,10 +56,19 @@ class UserSummaryView(LoginRequiredMixin, TemplateView):
     title = _('Homepage')
 
     def get_context_data(self, **kwargs):
+        problems = self.request.user.profile.cfuser.recommended_problems.all()
+        problemlist = []
+        for pb in problems:
+            name = pb.name
+            url = baseurl.format(cid=pb.contest_id, index=pb.index)
+            tags = pb.tags.all()
+            problemlist.append((name, url, tags))
+        random.shuffle(problemlist)
         context = super().get_context_data(**kwargs)
         context.update({
             'avatar': self.request.user.profile.avatar.url,
             'cfuser': self.request.user.profile.cfuser,
+            'problems': problemlist,
         })
         return context
 
@@ -238,11 +248,14 @@ class RecommendationView(TemplateView):
             })
         else:
             user = User.objects.get(id=kwargs.get('pk'))
+            cfuser = user.profile.cfuser
+            cfuser.recommended_problems.clear()
             handle = user.profile.cfuser.handle
             problems = rec.recommendation(handle, graph[1], graph[0])[:5]
             recpb = []
             for pb in problems:
                 pbobj = Problem.objects.filter(name=pb).first()
+                cfuser.recommended_problems.add(pbobj)
                 pburl = baseurl.format(cid=pbobj.contest_id, index=pbobj.index)
                 tags = sorted(pbobj.tags.all(), key=lambda x: x.name)
                 recpb.append((pb, pburl, tags))

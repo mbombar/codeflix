@@ -53,6 +53,11 @@ class CodeforcesUser(models.Model):
         null=True,
         verbose_name=_("Last name"),
     )
+    recommended_problems = models.ManyToManyField(
+        'Problem',
+        verbose_name=_("The list of problems recommended for this user."),
+        blank=True,
+    )
 
     def __str__(self):
         return "{} '{}' {}".format(self.first_name or "", self.handle, self.last_name or "")
