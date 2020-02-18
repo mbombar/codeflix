@@ -44,11 +44,18 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'codeflix',
     'codeforces',
+    'myapi',
+    # graph
+    'api',
+    'recommendation',
 
     # For the frontend
     'bootstrap4',
     'django_icons',
     'django_select2',
+
+    # API
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -104,7 +111,17 @@ CACHES = {
 
 SELECT2_CACHE_BACKEND = 'select2'
 
-# Password validation
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+}
+
+# password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
