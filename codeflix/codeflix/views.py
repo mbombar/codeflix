@@ -5,7 +5,7 @@ from codeforces.models import Problem
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
-from django.core.exceptions import ValidationError
+from django.core.exceptions import PermissionDenied, ValidationError
 from django.shortcuts import redirect, resolve_url
 from django.template import loader
 from django.urls import reverse_lazy
@@ -253,4 +253,106 @@ class RecommendationView(TemplateView):
                 'problems': recpb,
                 'user': self.request.user,
             })
+        return context
+
+
+class DumpGraphView(LoginRequiredMixin, View):
+    def dispatch(self, *args, **kwargs):
+        if not self.request.user.is_staff:
+            raise PermissionDenied
+        return super().dispatch(*args, **kwargs)
+
+    def get(self, *args, **kwargs):
+        try:
+            with open(os.path.join(settings.BASE_DIR, "codeflix-graph"), "wb") as pgraph:
+                pickle.dump(graph, pgraph, protocol=pickle.HIGHEST_PROTOCOL,
+                            fix_imports=False,)
+        except TypeError:
+            # Display the "Graph dump unsuccessful" page.
+            return redirect(reverse_lazy("dump_graph_failed"))
+
+        return redirect(reverse_lazy("dump_graph_done"))
+
+
+class DumpGraphDoneView(LoginRequiredMixin, TemplateView):
+    template_name = 'graph/dump_complete.html'
+
+    def dispatch(self, *args, **kwargs):
+        if not self.request.user.is_staff:
+            raise PermissionDenied
+        return super().dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['graph_length'] = len(graph[0])
+        context['graph_dumped'] = True
+        context['title'] = _('Graph dump complete')
+        return context
+
+
+class DumpGraphFailedView(LoginRequiredMixin, TemplateView):
+    template_name = 'graph/dump_complete.html'
+    title = _('Graph dump complete')
+
+    def dispatch(self, *args, **kwargs):
+        if not self.request.user.is_staff:
+            raise PermissionDenied
+        return super().dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = _('Graph dump failed')
+        context['graph_dumped'] = False
+        return context
+
+
+class LoadGraphView(LoginRequiredMixin, View):
+    def dispatch(self, *args, **kwargs):
+        if not self.request.user.is_staff:
+            raise PermissionDenied
+        return super().dispatch(*args, **kwargs)
+
+    def get(self, *args, **kwargs):
+        global graph
+        try:
+            with open(os.path.join(settings.BASE_DIR, "codeflix-graph"), "rb") as pgraph:
+                graph = pickle.load(pgraph, fix_imports=False)
+        except (TypeError, FileNotFoundError, EOFError, pickle.PickleError, pickle.UnpicklingError):
+            graph = None
+            return redirect(reverse_lazy('load_graph_failed'))
+        return redirect(reverse_lazy('load_graph_done'))
+
+
+class LoadGraphDoneView(LoginRequiredMixin, TemplateView):
+    template_name = 'graph/load_complete.html'
+
+    def dispatch(self, *args, **kwargs):
+        if not self.request.user.is_staff:
+            raise PermissionDenied
+        return super().dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        try:
+            context['graph_length'] = len(graph[0])
+            context['title'] = _('Graph load complete')
+            context['graph_loaded'] = True
+        except TypeError:
+            context['title'] = _('Graph load failed')
+            context['graph_loaded'] = False
+        return context
+
+
+class LoadGraphFailedView(LoginRequiredMixin, TemplateView):
+    template_name = 'graph/load_complete.html'
+
+    def dispatch(self, *args, **kwargs):
+        if not self.request.user.is_staff:
+            raise PermissionDenied
+        return super().dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = _('Graph load failed')
+        context['graph_loaded'] = False
         return context

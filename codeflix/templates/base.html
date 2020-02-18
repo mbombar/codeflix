@@ -32,6 +32,12 @@
 	    {% if request.user.is_authenticated %}
 	    {% if request.user.is_staff %}
 	  <li class="nav-item">
+	    <a class="nav-link" href="{% url 'dump_graph' %}"> Dump Graph </a>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link" href="{% url 'load_graph' %}"> Reload Graph </a>
+	  </li>
+	  <li class="nav-item">
 	    <a class="nav-link" href="{% url 'admin:index' %}"> Administration </a>
 	  </li>
 	  {% endif %}
