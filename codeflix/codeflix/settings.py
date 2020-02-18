@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     # graph
     'api',
     'recommendation',
+    'graph',
 
     # For the frontend
     'bootstrap4',
