@@ -56,7 +56,10 @@ class UserSummaryView(LoginRequiredMixin, TemplateView):
     title = _('Homepage')
 
     def get_context_data(self, **kwargs):
-        problems = self.request.user.profile.cfuser.recommended_problems.all()
+        try:
+            problems = self.request.user.profile.cfuser.recommended_problems.all()
+        except (TypeError, AttributeError):
+            problems = Problem.objects.none()
         problemlist = []
         for pb in problems:
             name = pb.name
