@@ -255,8 +255,8 @@ class RecommendationView(TemplateView):
             #cfuser.recommended_problems.clear()
             handle = user.profile.cfuser.handle
             try:
-                problems = list(cfuser.recommended_problems.all())
-                if problems == []:
+                problems = cfuser.recommended_problems.all()
+                if problems.count() == 0:
                     problems = rec.recommendation(handle, graph[1], graph[0])[:5]
 
             except (TypeError, AttributeError):
