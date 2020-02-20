@@ -39,6 +39,7 @@ urlpatterns = [
     path('graph/load/done/', views.LoadGraphDoneView.as_view(), name='load_graph_done'),
     path('graph/load/failed/', views.LoadGraphFailedView.as_view(), name='load_graph_failed'),
     path('recommendation/<int:pk>/', views.RecommendationView.as_view(), name='recommendation'),
+    path('recommendation/<int:pk>/renew_recommendation/', views.RenewRecommendationView.as_view(), name='renew_recommendation'),
     path('admin/', admin.site.urls),
     path('select2/', include('django_select2.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

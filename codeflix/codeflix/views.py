@@ -203,6 +203,12 @@ class AvatarEraseView(LoginRequiredMixin, View):
         user.profile.save()
         return redirect('account_summary', pk=kwargs['pk'])
 
+class RenewRecommendationView(LoginRequiredMixin, View):
+    def get(self, *args, **kwargs):
+        user = User.objects.get(id=kwargs.get('pk'))
+        cfuser = user.profile.cfuser
+        cfuser.recommended_problems.clear()
+        return redirect('recommendation', pk=kwargs['pk'])
 
 class CodeforcesUpdateView(LoginRequiredMixin, UpdateView):
     model = Profile
@@ -252,7 +258,6 @@ class RecommendationView(TemplateView):
         else:
             user = User.objects.get(id=kwargs.get('pk'))
             cfuser = user.profile.cfuser
-            #cfuser.recommended_problems.clear()
             handle = user.profile.cfuser.handle
             try:
                 problems = cfuser.recommended_problems.all()
