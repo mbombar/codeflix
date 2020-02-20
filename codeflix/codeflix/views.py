@@ -252,9 +252,15 @@ class RecommendationView(TemplateView):
         else:
             user = User.objects.get(id=kwargs.get('pk'))
             cfuser = user.profile.cfuser
-            cfuser.recommended_problems.clear()
+            #cfuser.recommended_problems.clear()
             handle = user.profile.cfuser.handle
-            problems = rec.recommendation(handle, graph[1], graph[0])[:5]
+            try:
+                problems = list(cfuser.recommended_problems.all())
+                if problems == []:
+                    problems = rec.recommendation(handle, graph[1], graph[0])[:5]
+
+            except (TypeError, AttributeError):
+                problems = []
             recpb = []
             for pb in problems:
                 pbobj = Problem.objects.filter(name=pb).first()
