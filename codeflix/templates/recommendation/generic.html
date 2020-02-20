@@ -24,13 +24,25 @@
     <tr><td>Name</td><td>Tags</td></tr>
     {% for pb, pburl, tags in problems %}
     <tr>
-	<td> <a href="{{ pburl }}">{{ pb }}</a></td>
-	<td>
+	<td style=
+	    "vertical-align: middle;
+	     padding-top: 6px;
+	     padding-bottom: 6px;
+	     overflow: hidden;
+	     white-space: nowrap">
+		<a href="{{ pburl }}">{{ pb }}</a>
+	</td>
+	<td style=
+	    "vertical-align: middle;
+	     padding-top: 6px;
+	     padding-bottom: 6px">
 	    {% for tag in tags %}
 	        <div style=
 		    "display: inline-block;
-		     padding: 0 3px 2px 3px;
-		     margin: 2px;
+		     text-align: center;
+		     padding: 0px 3px 0px 3px;
+		     margin-top: 1px;
+		     margin-bottom: 1px;
 		     border:1px solid;
 		     border-color:rgb(185,185,185);
 		     border-radius:5px;
