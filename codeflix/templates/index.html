@@ -35,26 +35,6 @@
     <a href="{% url 'codeforces_update' user.profile.pk %}" type="button" class="btn btn-warning">
       Change codeforces Handle
     </a>
-    {% if cfuser %}
-    <a href="{% url 'recommendation' user.pk %}" type="button" class="btn btn-info">
-      {% if problems %}Renew{% else %}Get{% endif %} recommendation
-    </a>
-    {% endif %}
-    <p/>
-    {% if problems %}
-    <h3>Recommendation for {{ cfuser.handle }}</h3>
-
-    We recommend to try and solve these problems
-
-    <div class="panel panel-info">
-      <table class="table tabled-condensed table-hover">
-	<tr><td>Name</td><td>Tags</td></tr>
-	{% for pb, pburl, tags in problems %}
-	<tr><td> <a href="{{ pburl }}">{{ pb }}</a></td><td><ul>{% for tag in tags %}<li>{{ tag.name }}</li>{% endfor %}</ul></td></tr>
-	{% endfor %}
-      </table>
-    </div>
-    {% endif %}
   </div>
 </div>
 
