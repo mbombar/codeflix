@@ -12,12 +12,14 @@
 
 <h2>Recommendation for {{ handle }}</h2>
 
-<a href="{% url 'renew_recommendation' user.pk %}" class="btn btn-success" type="button"a>
+<p>We recommend to solve these problems :
+
+<a href="{% url 'renew_recommendation' user.pk %}" class="btn btn-success" type="button" style="float: right"a>
   Renew recommendation
 </a>
 
+</p>
 
-<p>We recommend to solve these problems :</p>
 
 <div class="panel panel-info">
   <table class="table tabled-condensed table-hover">
