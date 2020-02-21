@@ -4,7 +4,7 @@ codeflix
 [![pipeline status](https://gitlab.crans.org/bombar/codeflix/badges/master/pipeline.svg)](https://gitlab.crans.org/bombar/codeflix/commits/master)
 [![coverage report](https://gitlab.crans.org/bombar/codeflix/badges/master/coverage.svg)](https://gitlab.crans.org/bombar/codeflix/commits/maste)
 
-Required packages (To be verified)
+Required packages
 -----------------
 
  * python3
@@ -17,6 +17,7 @@ Required packages (To be verified)
  * uwsgi-plugin-python3
  * python3-venv
  * memcached
+ * gettext
 
 ## Install
 
@@ -32,6 +33,8 @@ First, clone the project (For instance in `/var/www/codeflix/`)
     $ sudo apt install postgresql
 	$ sudo apt install postgresql-server-dev-NN # Where NN is the postgresql version.
 	$ sudo apt install gcc # Needed to compile python packages
+	$ sudo apt install memcached # Needed for caching (autocompletion)
+	$ sudo apt install gettext # Needed for translation
 
 	$ python3 -m venv venv
 	$ source venv/bin/activate
