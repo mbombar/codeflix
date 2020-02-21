@@ -2,14 +2,14 @@
 
 {% load bootstrap4 %}
 
-{% block title %}Sign up{% endblock %}
+{% block title %}{% trans Sign up %}{% endblock %}
 
 {% block content %}
     <form method="post" action="">
         {% csrf_token %}
         {% bootstrap_form form %}
         <button class="btn btn-success" type="submit">
-            <i class="fa fa-sign-in"></i> Sign up
+            <i class="fa fa-sign-in"></i> {% Sign up %}
         </button>
     </form>
 {% endblock %}

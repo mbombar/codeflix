@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% load bootstrap4 %}
 
@@ -12,18 +13,18 @@
 <div class="col-sm-12 col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
   <div class="panel panel-info">
     <table class="table tabled-condensed table-hover">
-      <tr><th>Username</th><td>{{ user.username }}</td></tr>
-      <tr><th>First Name</th><td>{{ user.first_name }}</td></tr>
-      <tr><th>Last Name</th><td>{{ user.last_name }}</td></tr>
-      <tr><th>Email</th><td>{{ user.email }}</td></tr>
-      <tr><th>Codeforces User</th><td> <form method="post" class="form-horizontal uniForm">
+      <tr><th>{% trans "Username" %}</th><td>{{ user.username }}</td></tr>
+      <tr><th>{% trans "First Name" %}</th><td>{{ user.first_name }}</td></tr>
+      <tr><th>{% trans "Last Name" %} </th><td>{{ user.last_name }}</td></tr>
+      <tr><th>{% trans "Email" %}</th><td>{{ user.email }}</td></tr>
+      <tr><th>{% trans "Codeforces Handle" %}</th><td> <form method="post" class="form-horizontal uniForm">
       {% csrf_token %}
       {% bootstrap_form form %}
       <button class="btn btn-success" type="submit">
-	<i class="fa fa-sign-in"></i> Done
+	<i class="fa fa-sign-in"></i> {% trans "Done" %}
       </button>
       <a href="{% url 'account_summary' user.pk %}" type="button" class="btn btn-danger">
-	Cancel
+	{% trans "Cancel" %}
       </a>
     </form>
   </td></tr>

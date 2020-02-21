@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% load bootstrap4 %}
 
@@ -12,10 +13,10 @@
   </div>
   {% bootstrap_form form %}
   <button class="btn btn-success" type="submit">
-    <i class="fa fa-sign-in"></i> Edit
+    <i class="fa fa-sign-in"></i> {% trans "Edit" %}
   </button>
   <a href="{% url 'account_summary' user.pk %}" type="button" class="btn btn-danger">
-    Cancel
+    {% trans "Cancel" %}
   </a>
 </form>
 {% endblock %}

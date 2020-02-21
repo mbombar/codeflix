@@ -103,6 +103,7 @@ If you want to use HTTPS (and you should !), you need to create certificates. We
 
 You will also need to edit your `settings_local.py` to provide a list of `ALLOWED_HOSTS` and a path for the static files.
 
-Finally, collect the static files.
+Finally, collect the static files and make the translations.
 
     $ ./manage.py collectstatic
+    $ ./manage.py compilemessages

@@ -1,35 +1,36 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% load bootstrap4 %}
 
-{% block title %} Edit {{ user.username }} {% endblock %}
+{% block title %} {% blocktrans with username=user.username %}Edit {{ username }}{% endblocktrans %}{% endblock %}
 
 {% block content %}
-<h2>Edit {{ user.username }}</h2>
+<h2>{% blocktrans with username=user.username %}Edit {{ username }}{% endblocktrans %}</h2>
 
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
   {% bootstrap_form form %}
   <button class="btn btn-success" type="submit">
-    <i class="fa fa-sign-in"></i> Edit Picture
+    <i class="fa fa-sign-in"></i> {% trans "Edit Picture" %}
   </button>
   <a href="{% url 'avatar_erase' user.pk %}" class="btn btn-danger" type="button"a>
-	Erase Picture
+    {% trans "Erase Picture" %}
   </a>
 </form>
 
 <div class="col-sm-12 col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
   <div class="panel panel-info">
     <table class="table tabled-condensed table-hover">
-      <tr><th>Username</th><td>{{ user.username }}</td></tr>
-      <tr><th>First Name</th><td>{{ user.first_name }}</td></tr>
-      <tr><th>Last Name</th><td>{{ user.last_name }}</td></tr>
-      <tr><th>Email</th><td>{{ user.email }}</td></tr>
-      <tr><th>Codeforces Handle</th><td>{% for cf in codeforcesusers %} {{ cf }} {% endfor %} </td></tr>
+      <tr><th>{% trans "Username" %}</th><td>{{ user.username }}</td></tr>
+      <tr><th>{% trans "First Name" %}</th><td>{{ user.first_name }}</td></tr>
+      <tr><th>{% trans "Last Name" %} </th><td>{{ user.last_name }}</td></tr>
+      <tr><th>{% trans "Email" %}</th><td>{{ user.email }}</td></tr>
+      <tr><th>{% trans "Codeforces Handle" %}</th><td>{% for cf in codeforcesusers %} {{ cf }} {% endfor %} </td></tr>
     </table>
   </div>
 </div>
 <a href="{% url 'account_summary' user.pk %}" type="button" class="btn btn-danger">
-  Cancel
+  {% trans "Cancel" %}
 </a>
 {% endblock %}

@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 
-{% block content %}
-<h2>Successfully logged out</h2>
+{% load i18n %}
 
-Click <a href="{% url 'index' %}">here</a> to come back to home page.
+{% block content %}
+<h2>{% trans "Successfully logged out" %}</h2>
+
+{% trans "Click" %} <a href="{% url 'index' %}">{% trans "here" %}</a> {% trans "to come back to home page" %}.
 {% endblock %}

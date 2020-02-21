@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
+from django.utils.translation import gettext_lazy as _
+
 import os
 
 try:
@@ -57,6 +59,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -142,6 +145,20 @@ DEFAULT_FROM_EMAIL = settings_local.DEFAULT_FROM_EMAIL
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
+
+LANGUAGES = [
+    ('en', _('English')),
+    ('fr', _('French')),
+]
+
+# Proritary location search for translations
+# then searches in {app}/locale/ for app in INSTALLED_APPS
+# Use only absolute paths with '/' delimiters even on Windows
+LOCALE_PATHS = [
+    # For translations outside of apps
+    os.path.join(BASE_DIR, 'templates', 'locale').replace('\\', '/')
+]
+
 
 TIME_ZONE = 'UTC'
 

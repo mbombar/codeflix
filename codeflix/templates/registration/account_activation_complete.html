@@ -1,11 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Account Activation</h2>
+<h2>{% Account Activation %}</h2>
 
 {% if validlink %}
+{% blocktrans trimmed %}
 Your account have successfully been activated. You can now <a href="{{ login_url }}">log in</a>.
+{% endblocktrans %}
 {% else %}
+{% blocktrans trimmed %}
 The link was invalid. The token may have expired. Please send us an email to activate your account.
+{% endblocktrans %}
 {% endif %}
 {% endblock %}

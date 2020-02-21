@@ -1,0 +1,71 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-02-21 20:07+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: codeflix/settings.py:150
+msgid "English"
+msgstr ""
+
+#: codeflix/settings.py:151
+msgid "French"
+msgstr ""
+
+#: codeflix/views.py:43 codeflix/views.py:56
+msgid "Homepage"
+msgstr "Page d'Accueil"
+
+#: codeflix/views.py:87
+msgid "Sign up"
+msgstr "Inscription"
+
+#: codeflix/views.py:116
+msgid "Account Activation"
+msgstr "Activation du compte"
+
+#: codeflix/views.py:159
+msgid "Account Activation unsuccessful"
+msgstr "L'activation du compte a échoué"
+
+#: codeflix/views.py:167
+msgid "Account activation email sent"
+msgstr "L'email pour activer le compte a bien été envoyé"
+
+#: codeflix/views.py:254
+msgid "Recommendation failed"
+msgstr "La recommendation a échoué."
+
+#: codeflix/views.py:277
+msgid "Recommendation {}"
+msgstr "Recommendation de {}"
+
+#: codeflix/views.py:316 codeflix/views.py:322
+msgid "Graph dump complete"
+msgstr "Le dump du graphe est terminé"
+
+#: codeflix/views.py:331
+msgid "Graph dump failed"
+msgstr "Le dump du graphe a échoué."
+
+#: codeflix/views.py:365
+msgid "Graph load complete"
+msgstr "La recharge du graphe est terminée"
+
+#: codeflix/views.py:368 codeflix/views.py:383
+msgid "Graph load failed"
+msgstr "La recharge du graphe a échoué"

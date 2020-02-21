@@ -4,8 +4,12 @@
 <h2>{{ title }}</h2>
 
 {% if graph_dumped %}
+{% blocktrans trimmed %}
 Congratulations, graph has been successfully dumped. It has {{ graph_length }} edges.
+{% endblocktrans %}
 {% else %}
+{% blocktrans trimmed %}
 Graph dump failed.
+{% endblocktrans %}
 {% endif %}
 {% endblock %}

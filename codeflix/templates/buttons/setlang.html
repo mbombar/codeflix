@@ -1,0 +1,26 @@
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% get_available_languages as LANGUAGES %}
+{% get_language_info_list for LANGUAGES as languages %}
+
+<a class="nav-link dropdown-toggle" type="button" role="button" id="setlang"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    <i class="fa fa-globe" style="color:red"></i> <span class="caret"></span>
+</a>
+<div class="dropdown-menu" aria-labelledby="setlang">
+    <form method="post" action="{% url 'set_language' %}">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.path }}">
+        {% for language in languages %}
+        <button type="submit" name="language" value="{{ language.code }}"
+                class="btn btn-link btn-block
+                {% if language.code == LANGUAGE_CODE %}disabled{% endif %}">
+            {% if language.code == LANGUAGE_CODE %}
+            <i class="fa fa-check"></i>
+            {% endif %}
+            {{ language.name_local|title }} ({{ language.code }})
+        </button>
+        {% endfor %}
+    </form>
+</div>
+

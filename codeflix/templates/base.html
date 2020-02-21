@@ -9,6 +9,9 @@
 {# Display django.contrib.messages as Bootstrap alerts #}
 {% bootstrap_messages %}
 
+{# Load translation #}
+{% load i18n %}
+
 <!DOCTYPE html>
 <html lang="fr">
   <head>
@@ -27,32 +30,37 @@
 	  </ul>
 	</li>
       </ul>
+      <ul class="navbar-nav navbar-right">
+	<li>
+	  {% include 'buttons/setlang.html' %}
+	</li>
+      </ul>
       <ul class="navbar-nav ml-auto"
 	  <li class="nav-item">
 	    {% if request.user.is_authenticated %}
 	    {% if request.user.is_staff %}
 	  <li class="nav-item">
-	    <a class="nav-link" href="{% url 'dump_graph' %}"> Dump Graph </a>
+	    <a class="nav-link" href="{% url 'dump_graph' %}"> {% trans "Dump Graph" %} </a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" href="{% url 'load_graph' %}"> Reload Graph </a>
+	    <a class="nav-link" href="{% url 'load_graph' %}"> {% trans "Reload Graph" %} </a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" href="{% url 'admin:index' %}"> Administration </a>
+	    <a class="nav-link" href="{% url 'admin:index' %}"> {% trans "Administration" %} </a>
 	  </li>
 	  {% endif %}
 	  {% if cfuser %}
 	  <li class="nav-item">
-	    <a class="nav-link" href="{% url 'recommendation' user.pk %}"> Recommendation </a>
+	    <a class="nav-link" href="{% url 'recommendation' user.pk %}"> {% trans "Recommendation" %} </a>
 	  </li>
 	  {% endif %}
           <li class="nav-item">
-	    <a class="nav-link" href="{% url 'index' %}"> Welcome {{ user.get_username }} </a>
+	    <a class="nav-link" href="{% url 'index' %}"> {% trans "Welcome" %} {{ user.get_username }} </a>
 	  </li>
-	  <a class="nav-link" href="{% url 'logout' %}">{% icon "sign-out-alt"%} Log Out </a>
+	  <a class="nav-link" href="{% url 'logout' %}">{% icon "sign-out-alt"%} {% trans "Log Out" %} </a>
 	  {% else %}
-	  <a class="nav-link" href="{% url 'signup' %}">{% icon "user-plus" %} Sign Up </a>
-	  <a class="nav-link" href="{% url 'login' %}">{% icon "sign-in-alt" %} Log In </a>
+	  <a class="nav-link" href="{% url 'signup' %}">{% icon "user-plus" %} {% trans "Sign Up" %} </a>
+	  <a class="nav-link" href="{% url 'login' %}">{% icon "sign-in-alt" %} {% trans "Log In" %} </a>
 	  {% endif %}
 	  </li>
       </ul>

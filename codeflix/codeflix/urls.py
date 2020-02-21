@@ -42,6 +42,7 @@ urlpatterns = [
     path('recommendation/<int:pk>/renew_recommendation/', views.RenewRecommendationView.as_view(), name='renew_recommendation'),
     path('admin/', admin.site.urls),
     path('select2/', include('django_select2.urls')),
+    path('i18n/', include('django.conf.urls.i18n')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += myapi_urls

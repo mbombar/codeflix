@@ -21,3 +21,6 @@ codeflix/media/avatars/*
 
 # Dump of the graph
 codeflix-graph
+
+# Compiled translations
+*.mo

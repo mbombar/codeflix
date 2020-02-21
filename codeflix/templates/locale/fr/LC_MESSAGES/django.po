@@ -1,0 +1,228 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-02-21 20:07+0000\n"
+"PO-Revision-Date: 2020-02-21 21:08+0100\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: templates/account/avatar_update.html:6
+#: templates/account/avatar_update.html:9
+#, python-format
+msgid "Edit %(username)s"
+msgstr "Bienvenue %(username)s"
+
+#: templates/account/avatar_update.html:15
+msgid "Edit Picture"
+msgstr "Modifier l'avatar"
+
+#: templates/account/avatar_update.html:18
+msgid "Erase Picture"
+msgstr "Effacer l'avatar"
+
+#: templates/account/avatar_update.html:25 templates/index.html:22
+msgid "Username"
+msgstr "Pseudo"
+
+#: templates/account/avatar_update.html:26 templates/index.html:23
+msgid "First Name"
+msgstr "Prénom"
+
+#: templates/account/avatar_update.html:27 templates/index.html:24
+msgid "Last Name"
+msgstr "Nom"
+
+#: templates/account/avatar_update.html:28 templates/index.html:25
+msgid "Email"
+msgstr "Email"
+
+#: templates/account/avatar_update.html:29 templates/index.html:26
+msgid "Codeforces Handle"
+msgstr "Pseudo Codeforces"
+
+#: templates/account/avatar_update.html:34
+msgid "Cancel"
+msgstr "Annuler"
+
+#: templates/base.html:43
+msgid "Dump Graph"
+msgstr "Dumper le Graphe"
+
+#: templates/base.html:46
+msgid "Reload Graph"
+msgstr "Recharger le Graphe"
+
+#: templates/base.html:49
+msgid "Administration"
+msgstr "Administration"
+
+#: templates/base.html:54
+msgid "Recommendation"
+msgstr "Recommendation"
+
+#: templates/base.html:58
+msgid "Welcome"
+msgstr "Bienvenue"
+
+#: templates/base.html:60
+msgid "Log Out"
+msgstr "Déconnexion"
+
+#: templates/base.html:62
+msgid "Sign Up"
+msgstr "S'inscrire"
+
+#: templates/base.html:63
+msgid "Log In"
+msgstr "Se connecter"
+
+#: templates/graph/dump_complete.html:7
+#, python-format
+msgid ""
+"Congratulations, graph has been successfully dumped. It has %(graph_length)s "
+"edges."
+msgstr ""
+"Félicitations, le graphe a bien été dumpé. Il a %(graph_length)s arêtes."
+
+#: templates/graph/dump_complete.html:11
+msgid "Graph dump failed."
+msgstr "Le dump du graphe a échoué."
+
+#: templates/graph/load_complete.html:7
+#, python-format
+msgid ""
+"Congratulations, graph has been successfully loaded. It has %(graph_length)s "
+"edges."
+msgstr ""
+"Félicitations, le graphe a bien été dumpé. Il a %(graph_length)s arêtes."
+
+#: templates/graph/load_complete.html:11
+msgid "Graph load failed."
+msgstr "Le dump du graphe a échoué."
+
+#: templates/index.html:9
+#, python-format
+msgid "Welcome %(username)s"
+msgstr "Bienvenue %(username)s"
+
+#: templates/index.html:29
+msgid "Edit"
+msgstr "Modifier"
+
+#: templates/index.html:32
+msgid "Change Picture"
+msgstr "Modifier l'avatar"
+
+#: templates/index.html:35
+msgid "Change Password"
+msgstr "Changer le mot de passe"
+
+#: templates/index.html:42
+msgid "Change Handle"
+msgstr "Changer le Handle"
+
+#: templates/index.html:48
+#, python-format
+msgid "Welcome to %(sitename)s ! "
+msgstr "Bienvenue sur %(sitename)s !"
+
+#: templates/recommendation/generic.html:14
+msgid "Recommendation for"
+msgstr "Recommendation pour"
+
+#: templates/recommendation/generic.html:16
+msgid "We recommend to solve these problems : "
+msgstr "Nous recommandons de résoudre les problèmes suivants :"
+
+#: templates/recommendation/generic.html:19
+msgid "Renew recommendation"
+msgstr "Renouveler la recommandation"
+
+#: templates/recommendation/generic.html:63
+msgid "Recommendation failed"
+msgstr "La recommandation a échoué"
+
+#: templates/recommendation/generic.html:67
+#: templates/registration/logged_out.html:8
+msgid "Click"
+msgstr "Cliquer"
+
+#: templates/recommendation/generic.html:67
+#: templates/registration/logged_out.html:8
+msgid "here"
+msgstr "ici"
+
+#: templates/recommendation/generic.html:67
+msgid "to come back to home page "
+msgstr "pour retourner à la page d'accueil"
+
+#: templates/registration/account_activation_complete.html:7
+#, python-format
+msgid ""
+"Your account have successfully been activated. You can now <a href="
+"\"%(login_url)s\">log in</a>."
+msgstr ""
+"Votre compte a bien été activé. Vous pouvez maintenant <a href="
+"\"%(login_url)s\">vous connecter</a>."
+
+#: templates/registration/account_activation_complete.html:11
+msgid ""
+"The link was invalid. The token may have expired. Please send us an email to "
+"activate your account."
+msgstr ""
+"Le lien est invalide. Le jeton d'authentification a peut-être expiré. "
+"Envoyez-nous un email pour activer votre compte."
+
+#: templates/registration/account_activation_email_sent.html:6
+msgid ""
+"An email has been sent. Please click on the link to activate your account."
+msgstr ""
+"Un email a été envoyé. Veuillez cliquer sur le lien pour activer votre "
+"compte."
+
+#: templates/registration/logged_out.html:6
+msgid "Successfully logged out"
+msgstr "Vous êtes bien déconnecté"
+
+#: templates/registration/logged_out.html:8
+msgid "to come back to home page"
+msgstr "pour retourner à la page d'accueil"
+
+#: templates/registration/login.html:6 templates/registration/login.html:13
+msgid "Log in"
+msgstr "Se connecter"
+
+#: templates/registration/login.html:16
+msgid "Reset password"
+msgstr "Réinitialiser le mot de passe."
+
+#: templates/registration/password_reset_complete.html:6
+msgid "Your password has successfully been changed. Please try to "
+msgstr "Votre mot de passe a bien été mis à jour. Vous pouvez essayer de vous "
+
+#: templates/registration/password_reset_done.html:4
+msgid "Password reset"
+msgstr "Réinitialisation du mot de passe"
+
+#: templates/registration/password_reset_done.html:6
+msgid ""
+"If the email you provided is associated with an active user account, an "
+"email with a link to reset the password has been sent."
+msgstr ""
+"Si l'email que vous avez entré est associé à un compte valide, un email avec "
+"un lien pour réinitialiser le mot de passe a été envoyé."
+
+#~ msgid "Edit %(username)s "
+#~ msgstr "Modifier %(username)s"

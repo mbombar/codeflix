@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 
+{% load i18n %}
+
 {% block title %} Homepage {% endblock %}
 
 {% block content %}
 {% if request.user.is_authenticated %}
-<h2>Welcome {{ user.username }}</h2>
+<h2>{% blocktrans with username=user.username %}Welcome {{ username }}{% endblocktrans %}</h2>
 
 
 <div class="col-sm-12 col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
@@ -17,33 +19,33 @@
 	  </div>
 	</td>
       </tr>
-      <tr><th>Username</th><td>{{ user.username }}</td></tr>
-      <tr><th>First Name</th><td>{{ user.first_name }}</td></tr>
-      <tr><th>Last Name</th><td>{{ user.last_name }}</td></tr>
-      <tr><th>Email</th><td>{{ user.email }}</td></tr>
-      <tr><th>Codeforces Handle</th><td>{% if cfuser %} {{ cfuser.handle }} {% endif %} </td></tr>
+      <tr><th>{% trans "Username" %}</th><td>{{ user.username }}</td></tr>
+      <tr><th>{% trans "First Name" %}</th><td>{{ user.first_name }}</td></tr>
+      <tr><th>{% trans "Last Name" %}</th><td>{{ user.last_name }}</td></tr>
+      <tr><th>{% trans "Email" %}</th><td>{{ user.email }}</td></tr>
+      <tr><th>{% trans "Codeforces Handle" %}</th><td>{% if cfuser %} {{ cfuser.handle }} {% endif %} </td></tr>
     </table>
     <a href="{% url 'account_update' user.pk %}" type="button" class="btn btn-success">
-      Edit
+     {% trans "Edit" %}
     </a>
     <a href="{% url 'avatar_update' user.profile.pk %}" type="button" class="btn btn-success">
-      Change Picture
+      {% trans "Change Picture" %}
     </a>
     <a href="{% url 'password_change' %}" type="button" class="btn btn-success">
-      Change Password
+      {% trans "Change Password" %}
     </a>
     <a
         href="{% url 'codeforces_update' user.profile.pk %}"
         type="button"
         class= {% if cfuser %} "btn btn-success" {% else %} "btn btn-warning"  {% endif %}
     >
-      Change Handle
+      {% trans "Change Handle" %}
     </a>
   </div>
 </div>
 
 {% else %}
-<h2>Welcome to {{ sitename }} !!</h2>
+<h2>{% blocktrans %}Welcome to {{ sitename }} ! {% endblocktrans %}</h2>
 {% endif %}
 
 {% endblock %}
