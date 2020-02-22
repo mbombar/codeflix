@@ -37,7 +37,7 @@ def sortscoreproblems(user, users, g):
     for pb in sumproblems.keys():
         if (pb not in g[user]) or (g[user][pb]['weight'] == 1):
             scoredpbs.append((sumproblems[pb] / nbproblems[pb], pb))
-    scoredpbs = list(sorted(filter(lambda x: x[0] < 1, scoredpbs), reverse=True))
+    scoredpbs = list(sorted(filter(lambda x: x[0] <= 0.95, scoredpbs), reverse=True))
     return list(map(lambda x : x[1], scoredpbs))
 
 
