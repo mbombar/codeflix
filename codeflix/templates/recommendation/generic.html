@@ -11,7 +11,7 @@
 
 
 
-<h2>{% trans "Recommendation for" %}{{ handle }}</h2>
+<h2>{% trans "Recommendation for" %} {{ handle }}</h2>
 
 <p>{% blocktrans %}We recommend to solve these problems : {% endblocktrans %}
 
@@ -64,6 +64,6 @@
 
 {% endif %}
 <p></p>
-<p>{% trans "Click" %}<a href="{% url 'index' %}">{% trans "here" %}</a> {% blocktrans %}to come back to home page {% endblocktrans %}.</p>
+<p>{% trans "Click" %} <a href="{% url 'index' %}">{% trans "here" %}</a> {% blocktrans %}to come back to home page {% endblocktrans %}.</p>
 
 {% endblock %}
