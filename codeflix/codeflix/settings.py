@@ -84,6 +84,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'codeflix.context_processors.site_name',
+                'codeflix.context_processors.cfuser',
             ],
         },
     },

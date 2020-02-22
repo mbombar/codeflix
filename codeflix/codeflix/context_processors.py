@@ -12,3 +12,11 @@ def site_name(request):
     return {
         "sitename": settings.SITE_NAME or site.name,
     }
+
+def cfuser(request):
+    """
+    Define cfuser in the context
+    """
+    return {
+        "cfuser": request.user.profile.cfuser,
+    }

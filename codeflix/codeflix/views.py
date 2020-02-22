@@ -70,7 +70,6 @@ class UserSummaryView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context.update({
             'avatar': self.request.user.profile.avatar.url,
-            'cfuser': self.request.user.profile.cfuser,
             'problems': problemlist,
         })
         return context
