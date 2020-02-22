@@ -17,6 +17,10 @@ def cfuser(request):
     """
     Define cfuser in the context
     """
+    try:
+        cfuser = request.user.profile.cfuser
+    except AttributeError:
+        cfuser = None
     return {
-        "cfuser": request.user.profile.cfuser,
+        "cfuser": cfuser,
     }
