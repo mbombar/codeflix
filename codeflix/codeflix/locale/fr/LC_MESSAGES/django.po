@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-21 20:07+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"POT-Creation-Date: 2020-02-22 23:36+0000\n"
+"PO-Revision-Date: 2020-02-23 00:36+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -18,54 +18,54 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: codeflix/settings.py:150
-msgid "English"
-msgstr ""
-
 #: codeflix/settings.py:151
+msgid "English"
+msgstr "Anglais"
+
+#: codeflix/settings.py:152
 msgid "French"
-msgstr ""
+msgstr "Français"
 
 #: codeflix/views.py:43 codeflix/views.py:56
 msgid "Homepage"
 msgstr "Page d'Accueil"
 
-#: codeflix/views.py:87
+#: codeflix/views.py:86
 msgid "Sign up"
 msgstr "Inscription"
 
-#: codeflix/views.py:116
+#: codeflix/views.py:115
 msgid "Account Activation"
 msgstr "Activation du compte"
 
-#: codeflix/views.py:159
+#: codeflix/views.py:158
 msgid "Account Activation unsuccessful"
 msgstr "L'activation du compte a échoué"
 
-#: codeflix/views.py:167
+#: codeflix/views.py:166
 msgid "Account activation email sent"
 msgstr "L'email pour activer le compte a bien été envoyé"
 
-#: codeflix/views.py:254
+#: codeflix/views.py:253
 msgid "Recommendation failed"
 msgstr "La recommendation a échoué."
 
-#: codeflix/views.py:277
+#: codeflix/views.py:276
 msgid "Recommendation {}"
 msgstr "Recommendation de {}"
 
-#: codeflix/views.py:316 codeflix/views.py:322
+#: codeflix/views.py:315 codeflix/views.py:321
 msgid "Graph dump complete"
 msgstr "Le dump du graphe est terminé"
 
-#: codeflix/views.py:331
+#: codeflix/views.py:330
 msgid "Graph dump failed"
 msgstr "Le dump du graphe a échoué."
 
-#: codeflix/views.py:365
+#: codeflix/views.py:364
 msgid "Graph load complete"
 msgstr "La recharge du graphe est terminée"
 
-#: codeflix/views.py:368 codeflix/views.py:383
+#: codeflix/views.py:367 codeflix/views.py:382
 msgid "Graph load failed"
 msgstr "La recharge du graphe a échoué"
