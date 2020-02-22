@@ -1,3 +1,5 @@
+{% load static %}
+
 {# Load the tag library #}
 {% load bootstrap4 %}
 {% load icons %}
@@ -13,7 +15,7 @@
 {% load i18n %}
 
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
   <head>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <title>{% block title %}Codeflix !!{% endblock %}</title>
@@ -31,10 +33,10 @@
 	    {% if request.user.is_authenticated %}
 	    {% if request.user.is_staff %}
 	  <li class="nav-item">
-	    <a class="nav-link" href="{% url 'dump_graph' %}"> {% trans "Dump Graph" %} </a>
+	    <a class="nav-link" onclick="anim()" href="{% url 'dump_graph' %}"> {% trans "Dump Graph" %} </a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" href="{% url 'load_graph' %}"> {% trans "Reload Graph" %} </a>
+	    <a class="nav-link" onclick="anim()" href="{% url 'load_graph' %}"> {% trans "Reload Graph" %} </a>
 	  </li>
 	  <li class="nav-item">
 	    <a class="nav-link" href="{% url 'admin:index' %}"> {% trans "Administration" %} </a>
@@ -42,7 +44,7 @@
 	  {% endif %}
 	  {% if cfuser %}
 	  <li class="nav-item">
-	    <a class="nav-link" href="{% url 'recommendation' user.pk %}"> {% trans "Recommendation" %} </a>
+	    <a class="nav-link" onclick="anim()" href="{% url 'recommendation' user.pk %}"> {% trans "Recommendation" %} </a>
 	  </li>
 	  {% endif %}
           <li class="nav-item">
@@ -61,6 +63,38 @@
    {% block content %}
    {% endblock %}
  </div>
+ <canvas id="gears" width="240" height="220" class="loader-wrapper"
+	 style="position: absolute;
+		left: 50%;
+		top: 50%;
+		margin-top: -110px;
+		margin-left: -120px;
+		display:none;"
+}></canvas>
 </body>
+
+<script>
+  function anim(){
+      $(".loader-wrapper").fadeIn();
+  };
+</script>
+
+<script src='{% static "codeflix/gear.js" %}'></script>
+
+<script>
+  var offset = 0.0;
+  function draw() {
+      StyleKitName.clearCanvas('gears');
+      StyleKitName.drawGears('gears', offset);
+  }
+  var tid = setInterval(loop, 25);
+  var canvas = document.getElementById("gears");
+  var context = canvas.getContext("2d");
+  function loop() {
+      offset += 1;
+      draw();
+  }
+</script>
+
 
 </html>
