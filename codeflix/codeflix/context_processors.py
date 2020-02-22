@@ -13,6 +13,7 @@ def site_name(request):
         "sitename": settings.SITE_NAME or site.name,
     }
 
+
 def cfuser(request):
     """
     Define cfuser in the context

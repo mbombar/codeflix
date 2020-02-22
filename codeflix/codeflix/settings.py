@@ -10,9 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
-from django.utils.translation import gettext_lazy as _
-
 import os
+
+from django.utils.translation import gettext_lazy as _
 
 try:
     from . import settings_local as settings_local
