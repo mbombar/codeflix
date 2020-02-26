@@ -23,6 +23,7 @@
 
   <body>
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+      <img src="/media/pictures/codeflix_logo.png"/>
       <ul class="navbar-nav navbar-right">
 	<li>
 	  {% include 'buttons/setlang.html' %}
@@ -32,17 +33,17 @@
 	  <li class="nav-item">
 	    {% if request.user.is_authenticated %}
 	    {% if request.user.is_staff %}
-	  <li class="nav-item">
-	    <a class="nav-link" onclick="anim()" href="{% url 'dump_graph' %}"> {% trans "Dump Graph" %} </a>
-	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link" onclick="anim()" href="{% url 'load_graph' %}"> {% trans "Reload Graph" %} </a>
-	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link" href="{% url 'admin:index' %}"> {% trans "Administration" %} </a>
-	  </li>
-	  {% endif %}
-	  {% if cfuser %}
+	    <ul class="navbar-nav">
+	      <li class="nav-item dropdown">
+		<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"> {% icon "fas fa-bezier-curve" %} Graph</a>
+		<ul class="dropdown-menu">
+		  <a class="dropdown-item" onclick="anim()" href="{% url 'dump_graph' %}">{% trans "Dump Graph" %}</a>
+		  <a class="dropdown-item" onclick="anim()" href="{% url 'load_graph' %}"> {% trans "Reload Graph" %}</a>
+		</ul>
+	      </li>
+	    </ul>
+	    {% endif %}
+	    {% if cfuser %}
 	  <li class="nav-item">
 	    <a class="nav-link" onclick="anim()" href="{% url 'recommendation' user.pk %}"> {% trans "Recommendation" %} </a>
 	  </li>
